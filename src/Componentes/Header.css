@@ -1,15 +1,17 @@
 header {
     position: fixed;
     top: 0;
-    left: 0;   
+    left: 0;
     width: 100%;
-    background: black; /* Garante a cor correta */
+    background: black;
+    /* Garante a cor correta */
     z-index: 1000;
     padding: 15px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 .logo {
     display: flex;
     align-items: center;
@@ -28,7 +30,8 @@ nav ul {
     gap: 20px;
 }
 
-nav a, .auth a {
+nav a,
+.auth a {
     color: white;
     font-size: 1rem;
 }

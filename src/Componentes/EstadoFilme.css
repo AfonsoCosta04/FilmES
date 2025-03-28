@@ -1,0 +1,112 @@
+/* Container do cartão do filme */
+.box-montra-filme-disponibilidade {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 15px;
+    width: 1100px;
+    max-width: 95%;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Imagem do filme */
+.box-montra-filme-disponibilidade img {
+    width: 80px;
+    height: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.box-montra-filme-disponibilidade .catalogo-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.box-montra-filme-disponibilidade h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    margin-bottom: 8px;
+}
+
+.box-montra-filme-disponibilidade .switch {
+    margin-left: auto;
+}
+
+/* Título do filme */
+.catalogo-info h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #000;
+}
+
+/* SWITCH CUSTOMIZADO */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-left: 20px;
+}
+
+/* Esconde o input original */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Apresentação do slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cc0000;
+    /* vermelho por padrão */
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+/* Bolinha do slider */
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+/* Quando está ATIVADO (checked) */
+.switch input:checked+.slider {
+    background-color: #28a745;
+    /* verde */
+}
+
+/* Move o círculo quando está ativado */
+.switch input:checked+.slider::before {
+    transform: translateX(26px);
+}
+
+/* Efeito quando focado */
+.switch input:focus+.slider {
+    box-shadow: 0 0 1px #28a745;
+}
+
+/* Slider redondo */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round::before {
+    border-radius: 50%;
+}

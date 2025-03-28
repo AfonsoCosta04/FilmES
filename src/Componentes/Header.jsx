@@ -1,34 +1,69 @@
 import React from 'react'
+import './Header.css'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
-    const navigate = useNavigate();
+const Header = ({ tipoUtilizador }) => {
+  const navigate = useNavigate();
 
-  const goToCatalogo = () => {
-    navigate('/Catalogo');
-  };
-  const goToHome = () => {
+  const goToPagIniUti = () => {
     navigate('/')
   }
-  const goToLocalizacao =() => {
-    navigate('/Localizacao')
+  const goToPagIniAdmin = () => {
+    navigate('/PaginaInicialAdmin')
+  }
+  const goToPagIniFunc = () => {
+    navigate('/PaginaInicialFuncionario')
   }
   return (
     <header>
-      <div className="logo" onClick={goToHome} style={{cursor: 'pointer'}}>
-        <img src="imagens/FilmE.S..png" alt="Logo FILME.S" />
-      </div>
-    <nav>
-      <ul>
-        <li onClick={goToCatalogo} style={{ cursor: 'pointer' }}>Catálogo</li>
-        <li onClick={goToLocalizacao} style={{cursor : 'pointer'}}>Localizacao</li>
-      </ul>
-    </nav>
-    <div className="auth">
-      <Link to = '/Login'>Login</Link> | <Link to = '/SignUp'>Sign Up</Link>
-    </div>
-  </header>
+      {tipoUtilizador === 1 && (
+        <div className="logo" onClick={goToPagIniAdmin} style={{ cursor: 'pointer' }}>
+          <img src="imagens/FilmE.S..png" alt="Logo FILME.S" />
+        </div>
+      )}
+      {tipoUtilizador === 2 && (
+        <div className="logo" onClick={goToPagIniFunc} style={{ cursor: 'pointer' }}>
+          <img src="imagens/FilmE.S..png" alt="Logo FILME.S" />
+        </div>
+      )}
+      {tipoUtilizador === 3 && (
+        <div className="logo" onClick={goToPagIniUti} style={{ cursor: 'pointer' }}>
+          <img src="imagens/FilmE.S..png" alt="Logo FILME.S" />
+        </div>
+      )}
+      {tipoUtilizador === 4  && (
+        <div className="logo" onClick={goToPagIniUti} style={{ cursor: 'pointer' }}>
+          <img src="imagens/FilmE.S..png" alt="Logo FILME.S" />
+        </div>
+      )}
+      <nav>
+        {tipoUtilizador === 1 && (
+          <div className="role-admin">
+            <p>
+              <strong>ADMIN</strong>
+            </p>
+          </div>
+        )}
+        {tipoUtilizador === 2 && (
+          <div className="role-admin">
+            <p>
+              <strong>FUNCIONÁRIO</strong>
+            </p>
+          </div>
+        )}
+        {tipoUtilizador === 3 && (
+          <div className="auth">
+            <Link to='/Login'>Login</Link> | <Link to='/SignUp'>Sign Up</Link>
+          </div>
+        )}
+        {tipoUtilizador === 4 && (
+          <div className="auth">
+            <Link to='/Carrinho'>Carrinho</Link> | <Link to='/EditarConta'>Utilizador</Link>
+          </div>
+        )}
+      </nav>
+    </header>
   )
 }
 
