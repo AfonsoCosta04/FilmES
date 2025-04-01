@@ -1,7 +1,7 @@
 {
   "name": "filme.s",
   "version": "0.1.0",
-  "homepage": "https://AfonsoCosta04.github.io/FilmES.git",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
