@@ -4,9 +4,51 @@ import Footer from '../Componentes/Footer';
 import Header from '../Componentes/Header';
 import { Link } from 'react-router-dom';
 import TipoUtilizador from '../Componentes/TipoUtilizador';
+import PopUp from '../Componentes/PopUp';
+import { useState } from 'react';
+import { useRef } from 'react';
 
 const EditarFilme = () => {
     const tipoUtilizador = TipoUtilizador;
+
+    const [mostrarPopUp, setMostrarPopUp] = useState(false);
+    const [acaoConfirmar, setAcaoConfirmar] = useState(() => () => { });
+    const [conteudoPopUp, setConteudoPopUp] = useState(null);
+
+    const [mostrarSegundoPopUp, setMostrarSegundoPopUp] = useState(false);
+    const [contador, setContador] = useState(5);
+    const [podeConfirmar, setPodeConfirmar] = useState(false);
+
+    const intervalRef = useRef(null);
+
+    const abrirPopUp = (acao, conteudo) => {
+        setAcaoConfirmar(() => acao);
+        setConteudoPopUp(conteudo);
+        setMostrarPopUp(true);
+    };
+
+    const abrirSegundoPopUp = (acao) => {
+        setMostrarSegundoPopUp(true);
+        setPodeConfirmar(false);
+        setContador(5);
+        setAcaoConfirmar(() => acao);
+
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+
+        intervalRef.current = setInterval(() => {
+            setContador(prev => {
+                if (prev === 1) {
+                    clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                    setPodeConfirmar(true);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+    };
     return (
         <>
             <meta charSet="UTF-8" />
@@ -136,9 +178,40 @@ const EditarFilme = () => {
                             <label htmlFor="imagem">Imagem do Filme:</label>
                             <input type="file" id="imagem" name="imagem" accept="image/*" />
                             <div className="botoes-edicao">
-                                <button type="button" className="botao-eliminar-func">
+                                <button type="button" className="botao-eliminar-func" onClick={() => abrirPopUp(() => abrirSegundoPopUp(() =>
+                                    console.log("Filme apagado")), <p style={{ color: 'black', fontSize: '16px', marginBottom: '20px' }}>
+                                    Tem a certeza que deseja eliminar este filme? </p>)}>
                                     Eliminar
                                 </button>
+                                <PopUp
+                                    visivel={mostrarPopUp}
+                                    fechar={() => setMostrarPopUp(false)}
+                                    onConfirm={acaoConfirmar}
+                                    yesColor="red"
+                                    noColor="gray"
+                                >
+                                    {conteudoPopUp}
+                                </PopUp>
+                                <PopUp
+                                    visivel={mostrarSegundoPopUp}
+                                    fechar={() => setMostrarSegundoPopUp(false)}
+                                    onConfirm={() => {
+                                        acaoConfirmar();
+                                        setMostrarSegundoPopUp(false);
+                                    }}
+                                    yesColor={podeConfirmar ? 'red' : 'gray'}
+                                    noColor="gray"
+                                    podeConfirmar={podeConfirmar}
+                                >
+                                    <p style={{ color: 'black', fontSize: '16px', marginBottom: '20px' }}>
+                                        Tem certeza que deseja eliminar este filme?
+                                    </p>
+                                    {!podeConfirmar && (
+                                        <p style={{ color: 'gray' }}>
+                                            Pode confirmar dentro de {contador} segundo{contador !== 1 ? 's' : ''}...
+                                        </p>
+                                    )}
+                                </PopUp>
                                 <button type="submit" className="botao-confirmar-func">
                                     Confirmar
                                 </button>
