@@ -16,7 +16,7 @@ public class SecurityUtil {
 
     public static boolean isCliente(HttpServletRequest request) {
         Integer tipo = (Integer) request.getAttribute("tipoUtilizador");
-        return tipo != null && tipo == 4;
+        return tipo != null && tipo == 3;
     }
 
     public static boolean isProprio(HttpServletRequest request, String emailDono) {
