@@ -59,7 +59,7 @@ const Header = ({ tipoUtilizador }) => {
         )}
         {tipoUtilizador === 4 && (
           <div className="auth">
-            <Link to='/Carrinho'>Carrinho</Link> | <Link to='/EditarConta'>Utilizador</Link>
+            <Link to='/Carrinho'>Carrinho</Link> | <Link to='/PerfilUtilizador'>Utilizador</Link>
           </div>
         )}
       </nav>

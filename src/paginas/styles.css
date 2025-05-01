@@ -1317,7 +1317,7 @@ label {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-.box-filmes-estado h2{
+.box-filmes-estado h2 {
     text-align: center;
     margin-bottom: 20px;
     font-size: 28px;
@@ -1347,4 +1347,129 @@ label {
 
 .botao-voltar-estado svg {
     stroke: white;
+}
+
+.perfil-buttons {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 15px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.perfil-btn {
+    background: white;
+    color: black;
+    border: none;
+    padding: 15px;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.perfil-btn:hover {
+    background: white;
+    color: black;
+    transform: scale(1.1);
+}
+
+.perfil-container {
+    position: relative;
+    background: rgb(0, 0, 0, 0.85);
+    width: 800px;
+    height: 300px;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.formulario-adicionar-filme-alt {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 500px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.formulario-adicionar-filme-alt h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.formulario-adicionar-filme-alt form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formulario-adicionar-filme-alt label {
+    font-weight: bold;
+    color: white;
+    margin-bottom: 3px;
+    font-size: 14px;
+}
+
+.formulario-adicionar-filme-alt input,
+.formulario-adicionar-filme-alt textarea {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    color: #000;
+    font-family: Arial, sans-serif;
+}
+
+.formulario-adicionar-filme-alt textarea {
+    resize: vertical;
+}
+
+.formulario-adicionar-filme-alt input::placeholder,
+.formulario-adicionar-filme.alt textarea::placeholder {
+    color: #444;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.save-button {
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 16px;
+    background: linear-gradient(45deg, #ff5733, #ffbd33);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.save-button:hover {
+    background: linear-gradient(45deg, #ffbd33, #ff5733);
+    transform: scale(1.05);
+}
+
+.pass-button {
+    font-size: 12x;
+    display: block;
+    justify-content: center;
+    margin: 15px auto 0 auto;
+}
+
+.pass-button:hover {
+    background:white ;
+    transform: scale(1.05);
 }

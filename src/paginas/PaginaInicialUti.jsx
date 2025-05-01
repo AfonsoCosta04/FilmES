@@ -3,6 +3,7 @@ import './styles.css';
 import Header from '../Componentes/Header.jsx';
 import Footer from '../Componentes/Footer.jsx';
 import TipoUtilizador from '../Componentes/TipoUtilizador.jsx';
+import Destaques from '../Componentes/Destaques.jsx';
 
 
 const PaginaInicialUti = () => {
@@ -12,6 +13,13 @@ const PaginaInicialUti = () => {
   const goToCatalogo = () => {
     navigate('/Catalogo');
   };
+  const filmes = [
+    { titulo: 'Interstellar', imagem: 'imagens/71-uZ6tkY8L._AC_SL1500_.jpg' },
+    { titulo: 'Dune', imagem: 'imagens/Duna.jpg' },
+    { titulo: 'Deadpool', imagem: 'imagens/deadpool.jpeg' },
+    { titulo: 'Fight Club', imagem: 'imagens/fight club.jpeg' },
+    { titulo: 'La La Land', imagem: 'imagens/la la land.jpg' },
+  ];
   return (
     <>
       <meta charSet="UTF-8" />
@@ -28,13 +36,7 @@ const PaginaInicialUti = () => {
             </div>
             <button className="catalog-button" onClick={goToCatalogo}>Catálogo</button>
           </div>
-          <div className="movie-slider">
-            <img src="imagens/71-uZ6tkY8L._AC_SL1500_.jpg" alt="Interstellar" />
-            <img src="imagens/Duna.jpg" alt="Dune 2" />
-            <img src="imagens/deadpool.jpeg" alt="Deadpool Wolverine" />
-            <img src="imagens/fight club.jpeg" alt="Fight Club" />
-            <img src="imagens/la la land.jpg" alt="La La Land" />
-          </div>
+          <Destaques filmes={filmes} />
         </div>
       </main>
       <Footer tipoUtilizador={tipoUtilizador} />
