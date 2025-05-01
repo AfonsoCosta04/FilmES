@@ -51,7 +51,7 @@ public class AuthController {
 
         Optional<Cliente> cliente = clienteRepository.findByEmailCliente(request.getEmail());
         if (cliente.isPresent() && passwordEncoder.matches(request.getPassword(), cliente.get().getPasswordCliente())) {
-            int tipoUtilizador = 4;
+            int tipoUtilizador = 3;
             String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador);
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
