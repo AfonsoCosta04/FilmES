@@ -52,6 +52,9 @@ public class FuncionarioController {
         if (!SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
+        if (!funcionarioRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
         funcionarioAtualizado.setIdFuncionario(id);
         return ResponseEntity.ok(funcionarioRepository.save(funcionarioAtualizado));
     }
