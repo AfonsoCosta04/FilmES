@@ -18,6 +18,9 @@ public class AdminController {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public ResponseEntity<?> listarAdmins(HttpServletRequest request) {
         if (!SecurityUtil.isAdmin(request)) {
