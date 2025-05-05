@@ -46,6 +46,7 @@ public class FuncionarioController {
         if (!SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
+        funcionario.setPasswordFuncionario(passwordEncoder.encode(funcionario.getPasswordFuncionario()));
         return ResponseEntity.ok(funcionarioRepository.save(funcionario));
     }
 
