@@ -24,12 +24,7 @@ public class ClienteController {
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
-
-    @GetMapping("/{id}")
-    public Optional<Cliente> obterCliente(@PathVariable Integer id) {
-        return clienteRepository.findById(id);
-    }
-
+    
     @PostMapping
     public Cliente adicionarCliente(@RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
