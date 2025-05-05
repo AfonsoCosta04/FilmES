@@ -58,6 +58,7 @@ public class FuncionarioController {
         if (!funcionarioRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
+        funcionarioAtualizado.setPasswordFuncionario(passwordEncoder.encode(funcionarioAtualizado.getPasswordFuncionario()));
         funcionarioAtualizado.setIdFuncionario(id);
         return ResponseEntity.ok(funcionarioRepository.save(funcionarioAtualizado));
     }
