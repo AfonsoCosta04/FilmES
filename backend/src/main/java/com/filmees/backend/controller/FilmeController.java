@@ -43,6 +43,9 @@ public class FilmeController {
         if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isFuncionario(request)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
+        if (!filmeRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
         atualizado.setIdFilme(id);
         return ResponseEntity.ok(filmeRepository.save(atualizado));
     }
