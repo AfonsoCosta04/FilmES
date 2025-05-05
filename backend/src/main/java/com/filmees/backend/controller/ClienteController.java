@@ -21,13 +21,11 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<Cliente> listarClientes() {
-        return clienteRepository.findAll();
-    }
-    
-    @PostMapping
-    public Cliente adicionarCliente(@RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public ResponseEntity<?> listarClientes(HttpServletRequest request) {
+        if (!SecurityUtil.isAdmin(request)) {
+            return ResponseEntity.status(403).body("Acesso negado.");
+        }
+        return ResponseEntity.ok(clienteRepository.findAll());
     }
 
     @PutMapping("/{id}")
