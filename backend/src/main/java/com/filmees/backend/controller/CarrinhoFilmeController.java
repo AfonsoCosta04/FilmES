@@ -84,7 +84,7 @@ public class CarrinhoFilmeController {
         novo.setCarrinho(carrinho.get());
         novo.setFilme(filme);
 
-        return carrinhoFilmeRepository.save(novo);
+        return ResponseEntity.ok(carrinhoFilmeRepository.save(novo));
     }
 
     @DeleteMapping("/carrinho/{idCarrinho}/filme/{idFilme}")
