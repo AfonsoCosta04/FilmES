@@ -53,6 +53,7 @@ public class AdminController {
         if (!SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
+        atualizado.setPasswordAdmin(passwordEncoder.encode(atualizado.getPasswordAdmin()));
         atualizado.setIdAdmin(id);
         return ResponseEntity.ok(adminRepository.save(atualizado));
     }
