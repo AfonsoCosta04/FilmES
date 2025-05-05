@@ -31,32 +31,6 @@ public class CarrinhoFilmeController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @GetMapping
-    public List<CarrinhoFilme> listarTodos() {
-        return carrinhoFilmeRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Optional<CarrinhoFilme> obterPorId(@PathVariable Integer id) {
-        return carrinhoFilmeRepository.findById(id);
-    }
-
-    @PostMapping
-    public CarrinhoFilme adicionar(@RequestBody CarrinhoFilme carrinhoFilme) {
-        return carrinhoFilmeRepository.save(carrinhoFilme);
-    }
-
-    @PutMapping("/{id}")
-    public CarrinhoFilme atualizar(@PathVariable Integer id, @RequestBody CarrinhoFilme atualizado) {
-        atualizado.setId(id);
-        return carrinhoFilmeRepository.save(atualizado);
-    }
-
-    @DeleteMapping("/{id}")
-    public void apagar(@PathVariable Integer id) {
-        carrinhoFilmeRepository.deleteById(id);
-    }
-
     @GetMapping("/carrinho/{idCarrinho}/filmes")
     public ResponseEntity<?> listarFilmesPorCarrinho(@PathVariable Integer idCarrinho,
                                                      HttpServletRequest request) {
