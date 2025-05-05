@@ -49,17 +49,6 @@ public class AuthController {
             return ResponseEntity.ok(response);
         }
 
-        Optional<Cliente> cliente = clienteRepository.findByEmailCliente(request.getEmail());
-        if (cliente.isPresent() && passwordEncoder.matches(request.getPassword(), cliente.get().getPasswordCliente())) {
-            int tipoUtilizador = 3;
-            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador);
-            Map<String, Object> response = new HashMap<>();
-            response.put("token", token);
-            response.put("tipoUtilizador", tipoUtilizador);
-            response.put("nome", cliente.get().getNomeCliente());
-            return ResponseEntity.ok(response);
-        }
-
         Optional<Funcionario> funcionario = funcionarioRepository.findByEmailFuncionario(request.getEmail());
         if (funcionario.isPresent() && passwordEncoder.matches(request.getPassword(), funcionario.get().getPasswordFuncionario())) {
             int tipoUtilizador = 2;
@@ -71,18 +60,52 @@ public class AuthController {
             return ResponseEntity.ok(response);
         }
 
+        Optional<Cliente> cliente = clienteRepository.findByEmailCliente(request.getEmail());
+        if (cliente.isPresent() && passwordEncoder.matches(request.getPassword(), cliente.get().getPasswordCliente())) {
+            int tipoUtilizador = 3;
+            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador);
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("tipoUtilizador", tipoUtilizador);
+            response.put("nome", cliente.get().getNomeCliente());
+            return ResponseEntity.ok(response);
+        }
+
         return ResponseEntity.status(401).body(Map.of("error", "Credenciais inválidas"));
     }
 
 
     @PostMapping("/registo")
     public ResponseEntity<?> registarCliente(@RequestBody Cliente cliente) {
+        // Verificações obrigatórias
+        if (cliente.getNomeCliente() == null || cliente.getNomeCliente().isBlank() ||
+                cliente.getEmailCliente() == null || cliente.getEmailCliente().isBlank() ||
+                cliente.getPasswordCliente() == null || cliente.getPasswordCliente().isBlank() ||
+                cliente.getNumeroDeTelefone() == null || cliente.getNumeroDeTelefone().isBlank() ||
+                cliente.getDataDeNascCliente() == null) {
+            return ResponseEntity.badRequest().body("Todos os campos obrigatórios devem ser preenchidos.");
+        }
+
+        // Verificar se o email já está em uso
         if (clienteRepository.findByEmailCliente(cliente.getEmailCliente()).isPresent()) {
             return ResponseEntity.status(409).body("Email já registado.");
         }
+
+        // Verificar se o número de telefone já está em uso
+        if (clienteRepository.existsByNumeroDeTelefone(cliente.getNumeroDeTelefone())) {
+            return ResponseEntity.status(409).body("Número de telemóvel já registado.");
+        }
+
+        // Verificar se o NIF já está em uso (se for fornecido)
+        if (cliente.getContribuinte() != null && clienteRepository.existsByContribuinte(cliente.getContribuinte())) {
+            return ResponseEntity.status(409).body("NIF já registado.");
+        }
+
+        // Encriptar password e guardar
         cliente.setPasswordCliente(passwordEncoder.encode(cliente.getPasswordCliente()));
         return ResponseEntity.ok(clienteRepository.save(cliente));
     }
+
 
     public static class LoginRequest {
         private String email;
