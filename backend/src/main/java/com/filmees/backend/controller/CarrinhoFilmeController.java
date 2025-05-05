@@ -81,7 +81,7 @@ public class CarrinhoFilmeController {
                 .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
 
         CarrinhoFilme novo = new CarrinhoFilme();
-        novo.setCarrinho(carrinho);
+        novo.setCarrinho(carrinho.get());
         novo.setFilme(filme);
 
         return carrinhoFilmeRepository.save(novo);
