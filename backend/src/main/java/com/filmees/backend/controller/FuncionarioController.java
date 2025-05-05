@@ -19,6 +19,9 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public ResponseEntity<?> listarFuncionarios(HttpServletRequest request) {
         if (!SecurityUtil.isAdmin(request)) {
