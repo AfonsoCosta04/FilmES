@@ -60,9 +60,22 @@ public class CarrinhoFilmeController {
     }
 
     @PostMapping("/carrinho/{idCarrinho}/filme/{idFilme}")
-    public CarrinhoFilme adicionarFilmeAoCarrinho(@PathVariable Integer idCarrinho, @PathVariable Integer idFilme) {
-        Carrinho carrinho = carrinhoRepository.findById(idCarrinho)
-                .orElseThrow(() -> new RuntimeException("Carrinho não encontrado"));
+    public ResponseEntity<?> adicionarFilmeAoCarrinho(@PathVariable Integer idCarrinho,
+                                                      @PathVariable Integer idFilme,
+                                                      HttpServletRequest request) {
+        Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarrinho);
+        if (carrinho.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Cliente> cliente = clienteRepository.findById(carrinho.get().getIdCliente());
+        if (cliente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cliente não encontrado.");
+        }
+
+        if (!SecurityUtil.isProprio(request, cliente.get().getEmailCliente())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
+        }
 
         Filme filme = filmeRepository.findById(idFilme)
                 .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
