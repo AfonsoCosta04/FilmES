@@ -28,7 +28,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // IGNORAR login/registo
         String path = request.getRequestURI();
+        System.out.println("Path recebido: " + path);
         if (path.startsWith("/api/auth/")) {
+            System.out.println("Ignorando autenticação JWT para path: " + path);
             filterChain.doFilter(request, response);
             return;
         }

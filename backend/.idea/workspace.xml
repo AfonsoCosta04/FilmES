@@ -4,25 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5343e343-7433-4481-a34a-01e0e146559b" name="Changes" comment="">
+    <list default="true" id="5343e343-7433-4481-a34a-01e0e146559b" name="Changes" comment="Criação de ficheiro">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/CarrinhoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/CarrinhoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/CarrinhoFilmeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/CarrinhoFilmeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ClienteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/FilmeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/FilmeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/FuncionarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/FuncionarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/TipoUtilizadorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/TipoUtilizadorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/CarrinhoFilme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/CarrinhoFilme.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/AdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/AdminRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/ClienteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/ClienteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/FuncionarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/FuncionarioRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtRequestFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../filme.s" beforeDir="false" afterPath="$PROJECT_DIR$/../filme.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,16 +44,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/FilmES/backend&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BackendApplication.executor": "Run",
+    "Application.FilmES.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/FilmES/backend"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="FilmES" type="Application" factoryName="Application" activateToolWindowBeforeRun="false">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/src/main/java/com/filmees/backend/BackendApplication.java" />
+      </option>
+      <option name="MAIN_CLASS_NAME" value="com.filmees.backend.BackendApplication" />
+      <module name="backend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -78,6 +77,270 @@
       <option name="presentableId" value="Default" />
       <updated>1744737452072</updated>
     </task>
+    <task id="LOCAL-00001" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746131405118</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1746131405118</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Commit Secret">
+      <option name="closed" value="true" />
+      <created>1746142916854</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746142916854</updated>
+    </task>
+    <task id="LOCAL-00003" summary="commit tipo">
+      <option name="closed" value="true" />
+      <created>1746143142161</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746143142161</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Criação de função existsByContribuinte">
+      <option name="closed" value="true" />
+      <created>1746476065497</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746476065497</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Atualização de ficheiro">
+      <option name="closed" value="true" />
+      <created>1746476226383</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1746476226383</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Remoção de funções nao usadas">
+      <option name="closed" value="true" />
+      <created>1746481427976</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746481427976</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Alteração metodo adicionarFilmeCarrinho">
+      <option name="closed" value="true" />
+      <created>1746481563991</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746481563991</updated>
+    </task>
+    <task id="LOCAL-00008" summary="metodo adicionar">
+      <option name="closed" value="true" />
+      <created>1746481590320</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746481590320</updated>
+    </task>
+    <task id="LOCAL-00009" summary="metodo adicionar">
+      <option name="closed" value="true" />
+      <created>1746481599181</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1746481599181</updated>
+    </task>
+    <task id="LOCAL-00010" summary="remoção">
+      <option name="closed" value="true" />
+      <created>1746482155103</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746482155103</updated>
+    </task>
+    <task id="LOCAL-00011" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746482514756</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746482514756</updated>
+    </task>
+    <task id="LOCAL-00012" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746483371437</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1746483371437</updated>
+    </task>
+    <task id="LOCAL-00013" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746483379499</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1746483379499</updated>
+    </task>
+    <task id="LOCAL-00014" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746483523484</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1746483523484</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746483535266</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1746483535266</updated>
+    </task>
+    <task id="LOCAL-00016" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746484239123</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484239123</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746484258003</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484258003</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746484274359</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484274359</updated>
+    </task>
+    <task id="LOCAL-00019" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746484290387</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484290387</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746484369414</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484369414</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746484475984</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484475984</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746484483487</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484483487</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746484491687</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484491687</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746484518268</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1746484518268</updated>
+    </task>
+    <task id="LOCAL-00025" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746487772576</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1746487772576</updated>
+    </task>
+    <task id="LOCAL-00026" summary="cmommit">
+      <option name="closed" value="true" />
+      <created>1746488867140</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1746488867140</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Criação de ficheiro">
+      <option name="closed" value="true" />
+      <created>1746548669949</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1746548669949</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1746549234504</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1746549234504</updated>
+    </task>
+    <task id="LOCAL-00029" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746549644239</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1746549644239</updated>
+    </task>
+    <task id="LOCAL-00030" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746549653593</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1746549653593</updated>
+    </task>
+    <task id="LOCAL-00031" summary="commit">
+      <option name="closed" value="true" />
+      <created>1746550321302</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1746550321302</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Commit Secret" />
+    <MESSAGE value="commit tipo" />
+    <MESSAGE value="Criação de função existsByContribuinte" />
+    <MESSAGE value="Atualização de ficheiro" />
+    <MESSAGE value="Remoção de funções nao usadas" />
+    <MESSAGE value="Alteração metodo adicionarFilmeCarrinho" />
+    <MESSAGE value="metodo adicionar" />
+    <MESSAGE value="remoção" />
+    <MESSAGE value="cmommit" />
+    <MESSAGE value="Criação de ficheiro" />
+    <MESSAGE value="Commit" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
 </project>
