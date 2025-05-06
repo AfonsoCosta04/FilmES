@@ -28,7 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
         if (path.startsWith("/api/auth/")) {
-            filterChain.doFilter(request, response); // Ignora o filtro para login/registo
+            filterChain.doFilter(request, response);
             return;
         }
 
