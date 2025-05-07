@@ -58,6 +58,7 @@ public class AuthController {
             response.put("token", token);
             response.put("tipoUtilizador", tipoUtilizador);
             response.put("nome", funcionario.get().getNomeFuncionario());
+            response.put("email", funcionario.get().getEmailFuncionario());
             return ResponseEntity.ok(response);
         }
 
