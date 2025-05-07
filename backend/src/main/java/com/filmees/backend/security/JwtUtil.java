@@ -22,7 +22,7 @@ public class JwtUtil {
 
     public <T> T extractClaim(String token, String claimName, Class<T> clazz) {
         Claims claims = extractAllClaims(token);
-        return claims.get(claimName, String.class);
+        return claims.get(claimName, clazz);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
