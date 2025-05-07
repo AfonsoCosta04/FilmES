@@ -28,6 +28,21 @@ public class ClienteController {
         return ResponseEntity.ok(clienteRepository.findAll());
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> obterClientePorEmail(@PathVariable String email, HttpServletRequest request) {
+        // Apenas o próprio cliente ou admin pode ver os dados
+        if (!SecurityUtil.isProprio(request, email) && !SecurityUtil.isAdmin(request)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
+        }
+
+        Optional<Cliente> cliente = clienteRepository.findByEmailCliente(email);
+        if (cliente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(cliente.get());
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarCliente(@PathVariable Integer id,
                                               @RequestBody Cliente atualizado,
