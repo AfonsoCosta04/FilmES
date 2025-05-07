@@ -70,6 +70,7 @@ public class AuthController {
             response.put("token", token);
             response.put("tipoUtilizador", tipoUtilizador);
             response.put("nome", cliente.get().getNomeCliente());
+            response.put("email", cliente.get().getEmailCliente());
             return ResponseEntity.ok(response);
         }
 
