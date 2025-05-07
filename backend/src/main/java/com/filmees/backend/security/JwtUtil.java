@@ -20,7 +20,7 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public String extractClaim(String token, String claimName) {
+    public <T> T extractClaim(String token, String claimName, Class<T> clazz) {
         Claims claims = extractAllClaims(token);
         return claims.get(claimName, String.class);
     }
