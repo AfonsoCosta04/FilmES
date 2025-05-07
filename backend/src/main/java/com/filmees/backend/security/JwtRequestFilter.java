@@ -50,7 +50,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                    String tipo = jwtUtil.extractClaim(token, "tipoUtilizador");
+                    // ✅ Guardar tipoUtilizador como Integer, não String
+                    Integer tipo = jwtUtil.extractClaim(token, "tipoUtilizador", Integer.class);
                     request.setAttribute("tipoUtilizador", tipo);
                     request.setAttribute("emailAutenticado", email);
                 }
