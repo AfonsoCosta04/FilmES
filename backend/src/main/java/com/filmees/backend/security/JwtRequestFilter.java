@@ -26,7 +26,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        // IGNORAR login/registo
+        // Ignorar autenticação nas rotas públicas
         String path = request.getRequestURI();
         System.out.println("Path recebido: " + path);
         if (path.startsWith("/api/auth/")) {
