@@ -62,7 +62,6 @@ public class ClienteController {
         return ResponseEntity.ok(salvo);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> apagarCliente(@PathVariable Integer id,
                                            HttpServletRequest request) {
