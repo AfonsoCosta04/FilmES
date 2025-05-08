@@ -90,5 +90,13 @@ public class Cliente {
     public void setContribuinte(String contribuinte) {
         this.contribuinte = contribuinte;
     }
+
+    public List<Aluguer> getAlugueres() {
+        return alugueres;
+    }
+
+    public void setAlugueres(List<Aluguer> alugueres) {
+        this.alugueres = alugueres;
+    }
 }
 
