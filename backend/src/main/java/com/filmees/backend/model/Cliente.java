@@ -29,6 +29,9 @@ public class Cliente {
     @Column(nullable = true)
     private String contribuinte;
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Aluguer> alugueres;
+
     // Getters e Setters
 
     public Integer getIdCliente() {
