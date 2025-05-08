@@ -205,5 +205,5 @@ public class Filme {
 
     public List<Aluguer> getAlugueres() { return alugueres; }
 
-    public void setAlugueres(List<Aluguer> alugueres) { this.alugueres = alugueres }
+    public void setAlugueres(List<Aluguer> alugueres) { this.alugueres = alugueres; }
 }
