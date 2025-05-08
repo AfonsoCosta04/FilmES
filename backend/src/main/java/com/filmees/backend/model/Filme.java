@@ -202,4 +202,8 @@ public class Filme {
     public void setIdadeRecomendada(Integer idadeRecomendada) {
         this.idadeRecomendada = idadeRecomendada;
     }
+
+    public List<Aluguer> getAlugueres() { return alugueres; }
+
+    public void setAlugueres(List<Aluguer> alugueres) { this.alugueres = alugueres }
 }
