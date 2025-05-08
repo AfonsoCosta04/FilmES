@@ -62,4 +62,9 @@ public class FilmeController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/filmes/populares")
+    public List<Filme> getFilmesMaisPopulares() {
+        return filmeRepository.findMaisAlugadosUltimaSemana();
+    }
+
 }
