@@ -57,6 +57,9 @@ public class Filme {
     @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CarrinhoFilme> carrinhos;
 
+    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Aluguer> alugueres;
+
     // Getters e Setters
 
     public Integer getIdFilme() {
