@@ -79,12 +79,8 @@ public class AluguerController {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
 
-        // Retornar os alugueres filtrados
-        List<Aluguer> alugueresDoCliente = aluguerRepository.findAll().stream()
-                .filter(a -> a.getCliente().getIdCliente().equals(id))
-                .toList();
-
-        return ResponseEntity.ok(alugueresDoCliente);
+        List<Aluguer> alugueres = aluguerRepository.findByCliente_IdCliente(id);
+        return ResponseEntity.ok(alugueres);
     }
 
 }
