@@ -27,7 +27,7 @@ public class SecurityUtil {
         if (token == null) return false;
 
         try {
-            Integer tipo = jwtUtil.extractClaim(token, "tipoUtilizador", Integer.class);
+            Integer tipo = jwtUtil.extractClaim(token, claims -> Integer.parseInt(claims.get("tipoUtilizador").toString()));
             return tipo != null && tipo.equals(1);
         } catch (Exception e) {
             return false;
@@ -39,7 +39,7 @@ public class SecurityUtil {
         if (token == null) return false;
 
         try {
-            Integer tipo = jwtUtil.extractClaim(token, "tipoUtilizador", Integer.class);
+            Integer tipo = jwtUtil.extractClaim(token, claims -> Integer.parseInt(claims.get("tipoUtilizador").toString()));
             return tipo != null && tipo.equals(2);
         } catch (Exception e) {
             return false;
@@ -51,7 +51,7 @@ public class SecurityUtil {
         if (token == null) return false;
 
         try {
-            Integer tipo = jwtUtil.extractClaim(token, "tipoUtilizador", Integer.class);
+            Integer tipo = jwtUtil.extractClaim(token, claims -> Integer.parseInt(claims.get("tipoUtilizador").toString()));
             return tipo != null && tipo.equals(3);
         } catch (Exception e) {
             return false;
