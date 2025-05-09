@@ -67,7 +67,6 @@ public class AluguerController {
 
     @GetMapping("/cliente/{id}")
     public ResponseEntity<?> listarPorCliente(@PathVariable Integer id, HttpServletRequest request) {
-        // Verificar se é o próprio cliente OU funcionário/admin
         Optional<Cliente> cliente = clienteRepository.findById(id);
         if (cliente.isEmpty()) {
             return ResponseEntity.notFound().build();
