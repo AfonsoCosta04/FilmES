@@ -35,8 +35,13 @@ public class FilmeController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Filme> obterFilme(@PathVariable Integer id) {
-        return filmeRepository.findById(id);
+    public ResponseEntity<?> obterFilmePorId(@PathVariable Integer id) {
+        Optional<Filme> filmeOptional = filmeRepository.findById(id);
+        if (filmeOptional.isPresent()) {
+            return ResponseEntity.ok(filmeOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Filme não encontrado.");
+        }
     }
 
     @PostMapping
