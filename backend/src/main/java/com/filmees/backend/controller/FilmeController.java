@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,9 +63,10 @@ public class FilmeController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/filmes/populares")
-    public List<Filme> getFilmesMaisPopulares() {
-        return filmeRepository.findMaisAlugadosUltimaSemana();
+    @GetMapping("/populares")
+    public List<Filme> filmesPopularesUltimaSemana() {
+        LocalDate dataLimite = LocalDate.now().minusDays(7);
+        return filmeRepository.findMaisAlugadosUltimaSemana(dataLimite);
     }
 
 }
