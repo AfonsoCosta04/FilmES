@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Desativa CSRF (para APIs REST)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sem sessão
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**","/api/filmes/", "/api/filmes/{id}",
+                        .requestMatchers("/api/auth/**","/api/filmes","/api/filmes/", "/api/filmes/{id}",
                                 "/api/filmes/populares").permitAll() // Permitir metodos qeu não precisam de token
                         .anyRequest().authenticated() // Tudo o resto precisa de token válido
                 )
