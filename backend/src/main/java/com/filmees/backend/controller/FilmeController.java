@@ -63,10 +63,10 @@ public class FilmeController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
-        if (!filmeRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
+        Filme existente = filmeRepository.findById(id).orElse(null);
+        if (existente == null) return ResponseEntity.notFound().build();
 
+        // Atualizar imagem se existir
         if (imagem != null && !imagem.isEmpty()) {
             try {
                 String nomeFicheiro = UUID.randomUUID() + "_" + imagem.getOriginalFilename();
@@ -76,11 +76,32 @@ public class FilmeController {
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar imagem.");
             }
+        } else {
+            atualizado.setFoto(existente.getFoto());
         }
 
+        // Preencher campos obrigatórios e opcionais ausentes
         atualizado.setIdFilme(id);
+        if (atualizado.getTitulo() == null) atualizado.setTitulo(existente.getTitulo());
+        if (atualizado.getAno() == null) atualizado.setAno(existente.getAno());
+        if (atualizado.getDuracaoHoras() == null) atualizado.setDuracaoHoras(existente.getDuracaoHoras());
+        if (atualizado.getDuracaoMinutos() == null) atualizado.setDuracaoMinutos(existente.getDuracaoMinutos());
+        if (atualizado.getImdb() == null) atualizado.setImdb(existente.getImdb());
+        if (atualizado.getRottenTomatoes() == null) atualizado.setRottenTomatoes(existente.getRottenTomatoes());
+        if (atualizado.getGenero1() == null) atualizado.setGenero1(existente.getGenero1());
+        if (atualizado.getGenero2() == null) atualizado.setGenero2(existente.getGenero2());
+        if (atualizado.getGenero3() == null) atualizado.setGenero3(existente.getGenero3());
+        if (atualizado.getAtor1() == null) atualizado.setAtor1(existente.getAtor1());
+        if (atualizado.getAtor2() == null) atualizado.setAtor2(existente.getAtor2());
+        if (atualizado.getAtor3() == null) atualizado.setAtor3(existente.getAtor3());
+        if (atualizado.getSinopse() == null) atualizado.setSinopse(existente.getSinopse());
+        if (atualizado.getPreco() == null) atualizado.setPreco(existente.getPreco());
+        if (atualizado.getDisponivel() == null) atualizado.setDisponivel(existente.getDisponivel());
+        if (atualizado.getIdadeRecomendada() == null) atualizado.setIdadeRecomendada(existente.getIdadeRecomendada());
+
         return ResponseEntity.ok(filmeRepository.save(atualizado));
     }
+
 
 
     @DeleteMapping("/{id}")

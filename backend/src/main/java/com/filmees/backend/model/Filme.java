@@ -1,9 +1,11 @@
 package com.filmees.backend.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "filme")
 public class Filme {
