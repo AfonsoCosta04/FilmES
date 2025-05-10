@@ -1,5 +1,6 @@
 package com.filmees.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -12,6 +13,7 @@ public class Aluguer {
 
     @ManyToOne
     @JoinColumn(name = "id_filme", nullable = false)
+    @JsonIgnore
     private Filme filme;
 
     @ManyToOne
