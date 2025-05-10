@@ -1,5 +1,6 @@
 package com.filmees.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -58,9 +59,11 @@ public class Filme {
     private Integer idadeRecomendada; // Opcional
 
     @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<CarrinhoFilme> carrinhos;
 
     @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Aluguer> alugueres;
 
     // Getters e Setters
