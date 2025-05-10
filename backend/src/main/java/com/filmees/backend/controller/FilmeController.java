@@ -58,13 +58,17 @@ public class FilmeController {
         if (imagem != null && !imagem.isEmpty()) {
             try {
                 String nomeFicheiro = UUID.randomUUID() + "_" + imagem.getOriginalFilename();
-                Path pathDestino = Paths.get("src/main/resources/static/imagens", nomeFicheiro);
+                Path pathDestino = Paths.get("C:/FilmES/filme.s/public/imagens", nomeFicheiro);
                 Files.copy(imagem.getInputStream(), pathDestino, StandardCopyOption.REPLACE_EXISTING);
                 filme.setFoto("imagens/" + nomeFicheiro);
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar imagem.");
             }
         }
+
+        if (filme.getDisponivel() == null) filme.setDisponivel(true);
+        if (filme.getPreco() == null) filme.setPreco(5.0);
+
 
         return ResponseEntity.ok(filmeRepository.save(filme));
     }
@@ -87,8 +91,14 @@ public class FilmeController {
         // Atualizar imagem se existir
         if (imagem != null && !imagem.isEmpty()) {
             try {
+                String imagemAntiga = existente.getFoto();
+                if (imagemAntiga != null) {
+                    Path pathAntigo = Paths.get("C:/FilmES/filme.s/public", imagemAntiga);
+                    Files.deleteIfExists(pathAntigo);
+                }
+
                 String nomeFicheiro = UUID.randomUUID() + "_" + imagem.getOriginalFilename();
-                Path pathDestino = Paths.get("src/main/resources/static/imagens", nomeFicheiro);
+                Path pathDestino = Paths.get("C:/FilmES/filme.s/public/imagens/", nomeFicheiro);
                 Files.copy(imagem.getInputStream(), pathDestino, StandardCopyOption.REPLACE_EXISTING);
                 atualizado.setFoto("imagens/" + nomeFicheiro);
             } catch (IOException e) {
