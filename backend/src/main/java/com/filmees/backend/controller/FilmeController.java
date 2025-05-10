@@ -64,8 +64,6 @@ public class FilmeController {
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar imagem.");
             }
-        } else {
-            filme.setFoto("imagens/default.jpg"); // ou null, se não quiseres usar default
         }
 
         return ResponseEntity.ok(filmeRepository.save(filme));
