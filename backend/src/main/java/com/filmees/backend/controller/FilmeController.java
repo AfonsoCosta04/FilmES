@@ -139,6 +139,18 @@ public class FilmeController {
         if (!filmeRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
+
+        Filme filme = filmeRepository.findById(id).get();
+        if (filme.getFoto() != null) {
+            try {
+                // Caminho completo para a pasta public/imagens do React
+                Path caminhoImagem = Paths.get("C:/FilmES/filme.s/public", filme.getFoto());
+                Files.deleteIfExists(caminhoImagem);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao apagar a imagem.");
+            }
+        }
+
         filmeRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
