@@ -57,7 +57,7 @@ public class Filme {
     @Column(name = "idade_recomendada")
     private Integer idadeRecomendada; // Opcional
 
-    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CarrinhoFilme> carrinhos;
 
     @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
