@@ -17,7 +17,7 @@ public interface FilmeRepository extends JpaRepository<Filme, Integer> {
     JOIN Aluguer a ON f.idFilme = a.filme.idFilme 
     WHERE a.dataLevantamento >= :dataLimite 
     GROUP BY f.idFilme 
-    ORDER BY COUNT(a.idFilme) DESC
+    ORDER BY COUNT(a.filme.idFilme) DESC
 """)
     List<Filme> findMaisAlugadosUltimaSemana(@Param("dataLimite") LocalDate dataLimite);
 }
