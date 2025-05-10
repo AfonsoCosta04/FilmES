@@ -161,4 +161,21 @@ public class FilmeController {
         return filmeRepository.findMaisAlugadosUltimaSemana(dataLimite);
     }
 
+    @PutMapping("/{id}/disponibilidade")
+    public ResponseEntity<?> atualizarDisponibilidade(
+            @PathVariable Integer id,
+            @RequestBody Filme filmeAtualizado,
+            HttpServletRequest request) {
+
+        if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isFuncionario(request)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
+        }
+
+        Filme filme = filmeRepository.findById(id).orElse(null);
+        if (filme == null) return ResponseEntity.notFound().build();
+
+        filme.setDisponivel(filmeAtualizado.getDisponivel());
+        return ResponseEntity.ok(filmeRepository.save(filme));
+    }
+
 }
