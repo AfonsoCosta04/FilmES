@@ -13,11 +13,11 @@ import java.util.List;
 @Repository
 public interface FilmeRepository extends JpaRepository<Filme, Integer> {
     @Query("""
-    SELECT f FROM Filme f
-    JOIN Aluguer a ON f.idFilme = a.filme.idFilme
-    WHERE a.dataLevantamento >= :dataLimite
-    GROUP BY f.idFilme
-    ORDER BY COUNT(a.idAluguer) DESC
+    SELECT f FROM Filme f 
+    JOIN Aluguer a ON f.idFilme = a.filme.idFilme 
+    WHERE a.dataLevantamento >= :dataLimite 
+    GROUP BY f.idFilme 
+    ORDER BY COUNT(a.idFilme) DESC
 """)
     List<Filme> findMaisAlugadosUltimaSemana(@Param("dataLimite") LocalDate dataLimite);
 }
