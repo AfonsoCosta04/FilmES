@@ -44,13 +44,33 @@ public class FilmeController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> adicionarFilme(@RequestBody Filme filme, HttpServletRequest request) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> adicionarFilme(
+            @RequestPart("filme") Filme filme,
+            @RequestPart(value = "imagem", required = false) MultipartFile imagem,
+            HttpServletRequest request) {
+
         if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isFuncionario(request)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
+
+        // Guardar imagem se existir
+        if (imagem != null && !imagem.isEmpty()) {
+            try {
+                String nomeFicheiro = UUID.randomUUID() + "_" + imagem.getOriginalFilename();
+                Path pathDestino = Paths.get("src/main/resources/static/imagens", nomeFicheiro);
+                Files.copy(imagem.getInputStream(), pathDestino, StandardCopyOption.REPLACE_EXISTING);
+                filme.setFoto("imagens/" + nomeFicheiro);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar imagem.");
+            }
+        } else {
+            filme.setFoto("imagens/default.jpg"); // ou null, se não quiseres usar default
+        }
+
         return ResponseEntity.ok(filmeRepository.save(filme));
     }
+
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> editarFilme(
@@ -101,7 +121,6 @@ public class FilmeController {
 
         return ResponseEntity.ok(filmeRepository.save(atualizado));
     }
-
 
 
     @DeleteMapping("/{id}")
