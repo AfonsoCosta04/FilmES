@@ -60,9 +60,7 @@ public class Funcionario {
         this.emailFuncionario = emailFuncionario;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
+    public String getTelefone() { return telefone; }
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
