@@ -31,7 +31,10 @@ public class Funcionario {
     @Column(name = "perm_edicao")
     private Boolean permEdicao = false;
 
-    // Getters e Setters
+    @Column(name = "id_tipo")
+    private Integer idTipo;
+
+// Getters e Setters
 
     public Integer getIdFuncionario() {
         return idFuncionario;
@@ -96,5 +99,9 @@ public class Funcionario {
     public void setPermEdicao(Boolean permEdicao) {
         this.permEdicao = permEdicao;
     }
+
+    public Integer getIdTipo() { return idTipo; }
+
+    public void setIdTipo(Integer idTipo) { this.idTipo = idTipo; }
 }
 

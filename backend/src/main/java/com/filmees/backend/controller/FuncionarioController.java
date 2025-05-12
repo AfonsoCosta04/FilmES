@@ -5,6 +5,7 @@ import com.filmees.backend.repository.FuncionarioRepository;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,7 @@ public class FuncionarioController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um funcionário com este email.");
         }
 
+        funcionario.setIdTipo(2);
         funcionario.setPasswordFuncionario(passwordEncoder.encode(funcionario.getPasswordFuncionario()));
         return ResponseEntity.ok(funcionarioRepository.save(funcionario));
     }
