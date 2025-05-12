@@ -44,6 +44,11 @@ public class FuncionarioController {
         if (!SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
+
+        if (funcionarioRepository.existsByEmailFuncionario(funcionario.getEmailFuncionario())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um funcionário com este email.");
+        }
+
         funcionario.setPasswordFuncionario(passwordEncoder.encode(funcionario.getPasswordFuncionario()));
         return ResponseEntity.ok(funcionarioRepository.save(funcionario));
     }
