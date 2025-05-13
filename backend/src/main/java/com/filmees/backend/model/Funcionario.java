@@ -112,6 +112,6 @@ public class Funcionario {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-    
+
 }
 
