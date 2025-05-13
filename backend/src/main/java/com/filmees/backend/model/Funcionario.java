@@ -34,6 +34,9 @@ public class Funcionario {
     @Column(name = "id_tipo")
     private Integer idTipo;
 
+    @Column(name = "foto")
+    private String foto;
+
 // Getters e Setters
 
     public Integer getIdFuncionario() {
