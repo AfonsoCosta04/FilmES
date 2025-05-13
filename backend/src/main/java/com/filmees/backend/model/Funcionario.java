@@ -101,5 +101,14 @@ public class Funcionario {
     public Integer getIdTipo() { return idTipo; }
 
     public void setIdTipo(Integer idTipo) { this.idTipo = idTipo; }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+    
 }
 
