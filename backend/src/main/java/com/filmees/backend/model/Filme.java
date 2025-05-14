@@ -215,4 +215,7 @@ public class Filme {
     public List<Aluguer> getAlugueres() { return alugueres; }
 
     public void setAlugueres(List<Aluguer> alugueres) { this.alugueres = alugueres; }
+
+    @Transient
+    public int getDuracaoTotalMinutos() { return (duracaoHoras * 60) + duracaoMinutos; }
 }

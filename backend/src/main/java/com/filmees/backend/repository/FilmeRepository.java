@@ -21,23 +21,22 @@ public interface FilmeRepository extends JpaRepository<Filme, Integer> {
             """)
     List<Filme> findMaisAlugadosUltimaSemana(@Param("dataLimite") LocalDate dataLimite);
 
-    @Query("""
-                SELECT f FROM Filme f
-                WHERE (:genero IS NULL OR LOWER(f.genero) = LOWER(:genero))
+    @Query(value = """
+                SELECT * FROM filme
+                WHERE (:genero IS NULL OR LOWER(genero1) = LOWER(:genero))
                   AND (
-                    :ano IS NULL OR (
-                      :ano = 'older' AND YEAR(f.dataLancamento) < 2020
-                      OR :ano <> 'older' AND YEAR(f.dataLancamento) = CAST(:ano AS int)
-                    )
+                    :ano IS NULL OR 
+                    (:ano = 'older' AND ano < 2020) OR 
+                    (:ano <> 'older' AND ano = CAST(:ano AS UNSIGNED))
                   )
                   AND (
                     :duracao IS NULL OR
-                    (:duracao = '-90min' AND f.duracao < 90) OR
-                    (:duracao = '90min-120min' AND f.duracao BETWEEN 90 AND 120) OR
-                    (:duracao = '+120min' AND f.duracao > 120)
+                    (:duracao = '-90min' AND (duracao_horas * 60 + duracao_minutos) < 90) OR
+                    (:duracao = '90min-120min' AND (duracao_horas * 60 + duracao_minutos) BETWEEN 90 AND 120) OR
+                    (:duracao = '+120min' AND (duracao_horas * 60 + duracao_minutos) > 120)
                   )
-                  AND f.disponivel = true
-            """)
+                  AND disponivel = 1
+            """, nativeQuery = true)
     List<Filme> filtrarFilmes(
             @Param("genero") String genero,
             @Param("ano") String ano,
