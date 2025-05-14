@@ -23,7 +23,9 @@ public interface FilmeRepository extends JpaRepository<Filme, Integer> {
 
     @Query(value = """
                 SELECT * FROM filme
-                WHERE (:genero IS NULL OR LOWER(genero1) = LOWER(:genero))
+                WHERE (:genero IS NULL OR LOWER(genero1) = LOWER(:genero)
+                                       OR LOWER(genero2) = LOWER(:genero)
+                                       OR LOWER(genero3) = LOWER(:genero))
                   AND (
                     :ano IS NULL OR 
                     (:ano = 'older' AND ano < 2020) OR 
@@ -35,13 +37,13 @@ public interface FilmeRepository extends JpaRepository<Filme, Integer> {
                     (:duracao = '90min-120min' AND (duracao_horas * 60 + duracao_minutos) BETWEEN 90 AND 120) OR
                     (:duracao = '+120min' AND (duracao_horas * 60 + duracao_minutos) > 120)
                   )
-                  AND disponivel = 1
             """, nativeQuery = true)
     List<Filme> filtrarFilmes(
             @Param("genero") String genero,
             @Param("ano") String ano,
             @Param("duracao") String duracao
     );
+
 
 }
 

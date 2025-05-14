@@ -29,10 +29,10 @@ public class FilmeController {
     @Autowired
     private FilmeRepository filmeRepository;
 
-    @GetMapping
+    /*@GetMapping
     public List<Filme> listarFilmes() {
         return filmeRepository.findAll();
-    }
+    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterFilmePorId(@PathVariable Integer id) {
@@ -44,7 +44,7 @@ public class FilmeController {
         }
     }
 
-    @GetMapping("/filmes")
+    @GetMapping
     public ResponseEntity<List<Filme>> filtrarFilmes(
             @RequestParam(required = false) String genero,
             @RequestParam(required = false) String ano,
@@ -53,7 +53,7 @@ public class FilmeController {
         List<Filme> filmes = filmeRepository.filtrarFilmes(genero, ano, duracao);
         return ResponseEntity.ok(filmes);
     }
-    
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> adicionarFilme(
             @RequestPart("filme") Filme filme,
