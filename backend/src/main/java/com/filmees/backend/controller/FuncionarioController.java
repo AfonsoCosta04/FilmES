@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -74,36 +75,64 @@ public class FuncionarioController {
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar a imagem.");
             }
-        }else{
+        } else {
             funcionario.setFoto("imagens/" + "default.jpg");
         }
 
         return ResponseEntity.ok(funcionarioRepository.save(funcionario));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> atualizarFuncionario(@PathVariable Integer id,
-                                                  @RequestBody Funcionario funcionarioAtualizado,
-                                                  HttpServletRequest request) {
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> atualizarFuncionario(
+            @PathVariable Integer id,
+            @RequestPart("funcionario") Funcionario funcionarioAtualizado,
+            @RequestPart(value = "imagem", required = false) MultipartFile imagem,
+            HttpServletRequest request) {
+
         if (!SecurityUtil.isAdmin(request)) {
-            return ResponseEntity.status(403).body("Acesso negado.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
-        if (!funcionarioRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+
+        Funcionario existente = funcionarioRepository.findById(id).orElse(null);
+        if (existente == null) return ResponseEntity.notFound().build();
+
+        if (imagem != null && !imagem.isEmpty()) {
+            try {
+                String nomeFicheiro = UUID.randomUUID() + "_" + imagem.getOriginalFilename();
+                Path destino = Paths.get("C:/FilmES/filme.s/public/imagens", nomeFicheiro);
+                Files.copy(imagem.getInputStream(), destino, StandardCopyOption.REPLACE_EXISTING);
+                funcionarioAtualizado.setFoto("imagens/" + nomeFicheiro);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar a imagem.");
+            }
+        } else {
+            funcionarioAtualizado.setFoto(existente.getFoto());
         }
-        funcionarioAtualizado.setPasswordFuncionario(passwordEncoder.encode(funcionarioAtualizado.getPasswordFuncionario()));
+
         funcionarioAtualizado.setIdFuncionario(id);
+        funcionarioAtualizado.setIdTipo(2);
+
         return ResponseEntity.ok(funcionarioRepository.save(funcionarioAtualizado));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> apagarFuncionario(@PathVariable Integer id, HttpServletRequest request) {
         if (!SecurityUtil.isAdmin(request)) {
-            return ResponseEntity.status(403).body("Acesso negado.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
-        if (!funcionarioRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+
+        Funcionario funcionario = funcionarioRepository.findById(id).orElse(null);
+        if (funcionario == null) return ResponseEntity.notFound().build();
+
+        if (funcionario.getFoto() != null && !funcionario.getFoto().contains("default.jpg")) {
+            try {
+                Path caminhoImagem = Paths.get("C:/FilmES/filme.s/public/", funcionario.getFoto());
+                Files.deleteIfExists(caminhoImagem);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao apagar imagem.");
+            }
         }
+
         funcionarioRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
