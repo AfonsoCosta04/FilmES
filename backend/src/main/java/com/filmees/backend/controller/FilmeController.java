@@ -44,6 +44,16 @@ public class FilmeController {
         }
     }
 
+    @GetMapping("/filmes")
+    public ResponseEntity<List<Filme>> filtrarFilmes(
+            @RequestParam(required = false) String genero,
+            @RequestParam(required = false) String ano,
+            @RequestParam(required = false) String duracao
+    ) {
+        List<Filme> filmes = filmeRepository.filtrarFilmes(genero, ano, duracao);
+        return ResponseEntity.ok(filmes);
+    }
+    
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> adicionarFilme(
             @RequestPart("filme") Filme filme,
