@@ -88,7 +88,7 @@ public class CarrinhoFilmeController {
         CarrinhoFilme novo = new CarrinhoFilme();
         novo.setCarrinho(carrinho.get());
         novo.setFilme(filme);
-
+        carrinhoFilmeRepository.save(novo);
         return ResponseEntity.ok("Filme adicionado ao carrinho com sucesso.");
     }
 
