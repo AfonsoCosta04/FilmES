@@ -1,7 +1,11 @@
 package com.filmees.backend.security;
 
-import io.github.bucket4j.*;
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Bucket4j;
+import io.github.bucket4j.Refill;
 import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,39 +15,49 @@ public class LoginRateLimiterService {
 
     private final Map<String, LoginEntry> attempts = new ConcurrentHashMap<>();
 
-    public boolean isBlocked(String ip) {
-        LoginEntry entry = attempts.computeIfAbsent(ip, k -> new LoginEntry());
+    public boolean isBlocked(String key) {
+        LoginEntry entry = attempts.computeIfAbsent(key, k -> new LoginEntry());
         boolean allowed = entry.bucket.tryConsume(1);
 
-        if (!allowed) {
-            entry.incrementBlockLevel();
+        if (!allowed && !entry.isAlreadyBlocked()) {
+            // Substituir por novo com mais bloqueio
+            LoginEntry newEntry = entry.nextLevel();
+            attempts.put(key, newEntry);
         }
 
         return !allowed;
     }
 
-    public void reset(String ip) {
-        attempts.remove(ip);
+    public void reset(String key) {
+        attempts.remove(key);
     }
 
     private static class LoginEntry {
-        private int bloqueios = 0;
-        private Bucket bucket;
+        private final int bloqueios;
+        private final Bucket bucket;
 
         public LoginEntry() {
-            this.bucket = criarBucket(0);
+            this(0);
+        }
+
+        public LoginEntry(int bloqueios) {
+            this.bloqueios = bloqueios;
+            this.bucket = criarBucket(bloqueios);
         }
 
         private Bucket criarBucket(int bloqueios) {
-            long minutosBloqueio = (long) Math.pow(2, bloqueios); // 1, 2, 4, 8...
+            long minutosBloqueio = (long) Math.pow(2, bloqueios);
             Refill refill = Refill.greedy(5, Duration.ofMinutes(minutosBloqueio));
             Bandwidth limit = Bandwidth.classic(5, refill);
             return Bucket4j.builder().addLimit(limit).build();
         }
 
-        public void incrementBlockLevel() {
-            bloqueios++;
-            this.bucket = criarBucket(bloqueios);
+        public LoginEntry nextLevel() {
+            return new LoginEntry(this.bloqueios + 1);
+        }
+
+        public boolean isAlreadyBlocked() {
+            return bucket.getAvailableTokens() == 0;
         }
     }
 }

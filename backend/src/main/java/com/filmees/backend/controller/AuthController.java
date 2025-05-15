@@ -49,7 +49,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletRequest http) {
         String ip = http.getRemoteAddr();
-        if (rateLimiter.isBlocked(ip)) {
+        String key = ip + ":" + request.getEmail();
+        if (rateLimiter.isBlocked(key)) {
             return ResponseEntity.status(429).body("Demasiadas tentativas. Tenta novamente mais tarde.");
         }
 
@@ -64,7 +65,8 @@ public class AuthController {
             response.put("nome", admin.get().getNomeAdmin());
             response.put("email", admin.get().getEmailAdmin());
 
-            rateLimiter.reset(ip);
+            rateLimiter.reset(key);
+
 
             return ResponseEntity.ok(response);
         }
@@ -80,7 +82,7 @@ public class AuthController {
             response.put("nome", funcionario.get().getNomeFuncionario());
             response.put("email", funcionario.get().getEmailFuncionario());
 
-            rateLimiter.reset(ip);
+            rateLimiter.reset(key);
 
             return ResponseEntity.ok(response);
         }
@@ -102,7 +104,7 @@ public class AuthController {
                 response.put("idCarrinho", carrinho.getIdCarrinho());
             }
 
-            rateLimiter.reset(ip);
+            rateLimiter.reset(key);
 
             return ResponseEntity.ok(response);
         }
