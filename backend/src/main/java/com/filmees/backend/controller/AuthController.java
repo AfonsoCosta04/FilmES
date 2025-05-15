@@ -9,6 +9,8 @@ import com.filmees.backend.repository.CarrinhoRepository;
 import com.filmees.backend.repository.ClienteRepository;
 import com.filmees.backend.repository.FuncionarioRepository;
 import com.filmees.backend.security.JwtUtil;
+import com.filmees.backend.security.LoginRateLimiterService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,8 +43,16 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private LoginRateLimiterService rateLimiter;
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletRequest http) {
+        String ip = http.getRemoteAddr();
+        if (rateLimiter.isBlocked(ip)) {
+            return ResponseEntity.status(429).body("Demasiadas tentativas. Tenta novamente mais tarde.");
+        }
+
         Optional<Admin> admin = adminRepository.findByEmailAdmin(request.getEmail());
         if (admin.isPresent() && passwordEncoder.matches(request.getPassword(), admin.get().getPasswordAdmin())) {
             int tipoUtilizador = 1;
@@ -53,6 +63,9 @@ public class AuthController {
             response.put("id", admin.get().getIdAdmin());
             response.put("nome", admin.get().getNomeAdmin());
             response.put("email", admin.get().getEmailAdmin());
+
+            rateLimiter.reset(ip);
+
             return ResponseEntity.ok(response);
         }
 
@@ -66,6 +79,9 @@ public class AuthController {
             response.put("id", funcionario.get().getIdFuncionario());
             response.put("nome", funcionario.get().getNomeFuncionario());
             response.put("email", funcionario.get().getEmailFuncionario());
+
+            rateLimiter.reset(ip);
+
             return ResponseEntity.ok(response);
         }
 
@@ -85,6 +101,8 @@ public class AuthController {
             if (carrinho != null) {
                 response.put("idCarrinho", carrinho.getIdCarrinho());
             }
+
+            rateLimiter.reset(ip);
 
             return ResponseEntity.ok(response);
         }
