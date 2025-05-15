@@ -51,10 +51,8 @@ public class CarrinhoFilmeController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
-        List<Filme> filmes = carrinhoFilmeRepository.findAll().stream()
-                .filter(cf -> cf.getCarrinho().getIdCarrinho().equals(idCarrinho))
-                .map(CarrinhoFilme::getFilme)
-                .toList();
+        List<Filme> filmes = carrinhoFilmeRepository.findByIdCarrinho(idCarrinho)
+                .stream().map(CarrinhoFilme::getFilme).toList();
 
         return ResponseEntity.ok(filmes);
     }
@@ -76,6 +74,13 @@ public class CarrinhoFilmeController {
         if (!SecurityUtil.isProprio(request, cliente.get().getEmailCliente())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
+        boolean jaExiste = carrinhoFilmeRepository.findAll().stream()
+                .anyMatch(cf -> cf.getCarrinho().getIdCarrinho().equals(idCarrinho)
+                        && cf.getFilme().getIdFilme().equals(idFilme));
+
+        if (jaExiste) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Filme já está no carrinho.");
+        }
 
         Filme filme = filmeRepository.findById(idFilme)
                 .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
@@ -84,7 +89,7 @@ public class CarrinhoFilmeController {
         novo.setCarrinho(carrinho.get());
         novo.setFilme(filme);
 
-        return ResponseEntity.ok(carrinhoFilmeRepository.save(novo));
+        return ResponseEntity.ok("Filme adicionado ao carrinho com sucesso.");
     }
 
     @DeleteMapping("/carrinho/{idCarrinho}/filme/{idFilme}")
