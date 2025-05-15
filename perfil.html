@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Utilizador</title>
+  <link rel="icon" href="imagens/favicon.ico" type="image/x-icon">
+  <style>
+    /* Estilos omitidos por brevidade */
+  </style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header-funcionarios-grid">
+    <div class="logo">
+      <a href="PagInicial.html">
+        <img src="imagens/FilmE.S..png" alt="Logo FILME.S">
+      </a>
+    </div>
+    <div class="esquerda">
+      <a href="localizacao.html">Localização</a>
+    </div>
+    <div class="direita">
+      <a href="carrinho.html">Carrinho</a> |
+      <a href="perfil.html">Utilizador</a>
+    </div>
+  </header>
+
+<!-- CONTEÚDO -->
+<div class="background-image">
+  <div class="perfil-wrapper">
+
+    <!-- Lado esquerdo -->
+    <div class="lado-esquerdo">
+      <div class="perfil-top-left">
+        <img src="imagens/cliente.jpg" alt="Foto de perfil">
+        <div class="user-info-inline">
+          <h3>Nome de Utilizador</h3>
+          <p>exemplo@mail.com</p>
+        </div>
+      </div>
+      <div class="menu">
+        <a href="perfil.html" class="active">Perfil</a>
+        <a href="historico.html">Historico de compras</a>
+        <a href="definicoes.html">Definições</a>
+      </div>
+    </div>
+
+    <!-- Lado direito -->
+    <div class="lado-direito">
+      <div class="titulo-perfil">Perfil</div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" value="exemplo@mail.com" disabled>
+        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+      </div>
+
+      <div class="form-group">
+        <label>Utilizador</label>
+        <input type="text" value="Nome de Utilizador" disabled>
+        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" value="************" disabled>
+        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+      </div>
+
+      <div class="form-group">
+        <label>Telemóvel</label>
+        <input type="tel" placeholder="Número de telemóvel" disabled>
+        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+      </div>
+
+      <div class="form-group">
+        <label>Data de Nascimento</label>
+        <input type="date" disabled>
+        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+      </div>
+
+      <div class="form-group">
+        <label>NIF</label>
+        <input type="text" placeholder="NIF" disabled>
+        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+      </div>
+
+      <button class="btn-salvar">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="social-links">
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+    <a href="#">Facebook</a>
+  </div>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+  function toggleEdit(icon) {
+    const input = icon.previousElementSibling;
+    input.disabled = !input.disabled;
+    if (!input.disabled) input.focus();
+  }
+</script>
+
+</body>
+</html>
