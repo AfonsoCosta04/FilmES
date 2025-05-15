@@ -1,9 +1,11 @@
 package com.filmees.backend.controller;
 
 import com.filmees.backend.model.Admin;
+import com.filmees.backend.model.Carrinho;
 import com.filmees.backend.model.Cliente;
 import com.filmees.backend.model.Funcionario;
 import com.filmees.backend.repository.AdminRepository;
+import com.filmees.backend.repository.CarrinhoRepository;
 import com.filmees.backend.repository.ClienteRepository;
 import com.filmees.backend.repository.FuncionarioRepository;
 import com.filmees.backend.security.JwtUtil;
@@ -29,6 +31,9 @@ public class AuthController {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private CarrinhoRepository carrinhoRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -68,12 +73,19 @@ public class AuthController {
         if (cliente.isPresent() && passwordEncoder.matches(request.getPassword(), cliente.get().getPasswordCliente())) {
             int tipoUtilizador = 3;
             String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador);
+            Carrinho carrinho = carrinhoRepository.findByIdCliente(cliente.get().getIdCliente()).orElse(null);
+
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("id", cliente.get().getIdCliente());
             response.put("tipoUtilizador", tipoUtilizador);
             response.put("nome", cliente.get().getNomeCliente());
             response.put("email", cliente.get().getEmailCliente());
+
+            if (carrinho != null) {
+                response.put("idCarrinho", carrinho.getIdCarrinho());
+            }
+
             return ResponseEntity.ok(response);
         }
 
@@ -117,10 +129,20 @@ public class AuthController {
         private String email;
         private String password;
 
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
+        public String getEmail() {
+            return email;
+        }
 
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
     }
 }
