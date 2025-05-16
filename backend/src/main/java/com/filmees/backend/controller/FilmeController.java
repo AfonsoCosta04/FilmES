@@ -4,7 +4,7 @@ import com.filmees.backend.model.*;
 import com.filmees.backend.repository.*;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.commons.text.similarity.LevenshteinDistance;
+import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,10 +18,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/filmes")
@@ -190,17 +190,22 @@ public class FilmeController {
         List<Filme> todosFilmes = filmeRepository.findAll();
 
         if (termo == null || termo.trim().isEmpty()) {
-            return ResponseEntity.ok(todosFilmes); // retorna todos
+            return ResponseEntity.ok(todosFilmes);
         }
 
         String termoLower = termo.toLowerCase();
-        LevenshteinDistance distancia = new LevenshteinDistance();
+        JaroWinklerSimilarity similarity = new JaroWinklerSimilarity();
 
         List<Filme> filmesFiltrados = todosFilmes.stream()
                 .filter(filme -> {
                     String tituloLower = filme.getTitulo().toLowerCase();
-                    int dist = distancia.apply(tituloLower, termoLower);
-                    return tituloLower.contains(termoLower) || dist <= 2;
+                    String[] palavras = tituloLower.split("\\s+");
+
+                    return Arrays.stream(palavras)
+                            .anyMatch(palavra -> {
+                                double score = similarity.apply(palavra, termoLower);
+                                return score >= 0.88;
+                            });
                 })
                 .toList();
 
