@@ -4,6 +4,7 @@ import com.filmees.backend.model.*;
 import com.filmees.backend.repository.*;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/filmes")
@@ -28,11 +30,6 @@ public class FilmeController {
 
     @Autowired
     private FilmeRepository filmeRepository;
-
-    /*@GetMapping
-    public List<Filme> listarFilmes() {
-        return filmeRepository.findAll();
-    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterFilmePorId(@PathVariable Integer id) {
@@ -188,4 +185,25 @@ public class FilmeController {
         return ResponseEntity.ok(filmeRepository.save(filme));
     }
 
+    @GetMapping("/pesquisa")
+    public ResponseEntity<?> pesquisarFilmes(@RequestParam(required = false) String termo) {
+        List<Filme> todosFilmes = filmeRepository.findAll();
+
+        if (termo == null || termo.trim().isEmpty()) {
+            return ResponseEntity.ok(todosFilmes); // retorna todos
+        }
+
+        String termoLower = termo.toLowerCase();
+        LevenshteinDistance distancia = new LevenshteinDistance();
+
+        List<Filme> filmesFiltrados = todosFilmes.stream()
+                .filter(filme -> {
+                    String tituloLower = filme.getTitulo().toLowerCase();
+                    int dist = distancia.apply(tituloLower, termoLower);
+                    return tituloLower.contains(termoLower) || dist <= 2;
+                })
+                .toList();
+
+        return ResponseEntity.ok(filmesFiltrados);
+    }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 // Filme Repository
 @Repository
 public interface FilmeRepository extends JpaRepository<Filme, Integer> {
+    List<Filme> findByTituloContainingIgnoreCase(String titulo);
     @Query("""
                 SELECT f FROM Filme f 
                 JOIN Aluguer a ON f.idFilme = a.filme.idFilme 
