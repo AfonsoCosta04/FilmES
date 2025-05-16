@@ -3,6 +3,7 @@ package com.filmees.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Aluguer {
@@ -12,11 +13,6 @@ public class Aluguer {
     private Integer idAluguer;
 
     @ManyToOne
-    @JoinColumn(name = "id_filme", nullable = false)
-    @JsonIgnore
-    private Filme filme;
-
-    @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
@@ -24,20 +20,20 @@ public class Aluguer {
     private LocalDate dataDevolucao;
     private String estado;
 
+    @ManyToMany
+    @JoinTable(
+            name = "aluguer_filme",
+            joinColumns = @JoinColumn(name = "id_aluguer"),
+            inverseJoinColumns = @JoinColumn(name = "id_filme")
+    )
+    private List<Filme> filmes;
+
     public Integer getIdAluguer() {
         return idAluguer;
     }
 
     public void setIdAluguer(Integer idAluguer) {
         this.idAluguer = idAluguer;
-    }
-
-    public Filme getFilme() {
-        return filme;
-    }
-
-    public void setFilme(Filme filme) {
-        this.filme = filme;
     }
 
     public Cliente getCliente() {
@@ -71,4 +67,8 @@ public class Aluguer {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public List<Filme> getFilmes(){ return filmes; }
+
+    public void setFilmes(List<Filme> filmes) { this.filmes = filmes; }
 }

@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5343e343-7433-4481-a34a-01e0e146559b" name="Changes" comment="Atualização de ficheiros">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/FilmeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/FilmeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Aluguer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Aluguer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Filme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Filme.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../filme.s" beforeDir="false" afterPath="$PROJECT_DIR$/../filme.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,14 +79,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744737452072</updated>
-    </task>
-    <task id="LOCAL-00061" summary="commit">
-      <option name="closed" value="true" />
-      <created>1746724953319</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1746724953319</updated>
     </task>
     <task id="LOCAL-00062" summary="Commit">
       <option name="closed" value="true" />
@@ -469,7 +464,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747390091865</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1747390741584</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1747390741584</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

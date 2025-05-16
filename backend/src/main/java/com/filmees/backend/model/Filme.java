@@ -62,8 +62,7 @@ public class Filme {
     @JsonIgnore
     private List<CarrinhoFilme> carrinhos;
 
-    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToMany(mappedBy = "filmes")
     private List<Aluguer> alugueres;
 
     // Getters e Setters

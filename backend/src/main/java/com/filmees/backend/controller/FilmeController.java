@@ -4,7 +4,9 @@ import com.filmees.backend.model.*;
 import com.filmees.backend.repository.*;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.text.similarity.FuzzyScore;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,10 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/filmes")
@@ -194,18 +193,46 @@ public class FilmeController {
         }
 
         String termoLower = termo.toLowerCase();
-        JaroWinklerSimilarity similarity = new JaroWinklerSimilarity();
+        LevenshteinDistance distancia = new LevenshteinDistance();
+        JaroWinklerSimilarity jaro = new JaroWinklerSimilarity();
 
         List<Filme> filmesFiltrados = todosFilmes.stream()
                 .filter(filme -> {
                     String tituloLower = filme.getTitulo().toLowerCase();
-                    String[] palavras = tituloLower.split("\\s+");
 
-                    return Arrays.stream(palavras)
-                            .anyMatch(palavra -> {
-                                double score = similarity.apply(palavra, termoLower);
-                                return score >= 0.88;
-                            });
+                    // Verificação direta
+                    if (tituloLower.contains(termoLower)) return true;
+
+                    String[] palavras = tituloLower.split("\\s+");
+                    for (String palavra : palavras) {
+                        if (palavra.length() < 4) continue; // Ignora palavras curtas
+
+                        int dist = distancia.apply(palavra, termoLower);
+                        double jaroSim = jaro.apply(palavra, termoLower);
+
+                        if (dist <= 1 || jaroSim >= 0.88) return true;
+
+                        // Verifica também substrings de palavras longas
+                        if (palavra.length() >= termoLower.length() + 2) {
+                            for (int i = 0; i <= palavra.length() - termoLower.length(); i++) {
+                                String sub = palavra.substring(i, Math.min(i + termoLower.length() + 2, palavra.length()));
+                                if (sub.length() < 4) continue;
+
+                                dist = distancia.apply(sub, termoLower);
+                                jaroSim = jaro.apply(sub, termoLower);
+                                if (dist <= 1 || jaroSim >= 0.88) return true;
+                            }
+                        }
+                    }
+
+                    // Verificar o título completo apenas se tiver 4+ letras
+                    if (tituloLower.length() >= 4) {
+                        int distTotal = distancia.apply(tituloLower, termoLower);
+                        double jaroTotal = jaro.apply(tituloLower, termoLower);
+                        return distTotal <= 1 || jaroTotal >= 0.88;
+                    }
+
+                    return false;
                 })
                 .toList();
 

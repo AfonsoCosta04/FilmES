@@ -2,8 +2,10 @@ package com.filmees.backend.controller;
 
 import com.filmees.backend.model.Aluguer;
 import com.filmees.backend.model.Cliente;
+import com.filmees.backend.model.Filme;
 import com.filmees.backend.repository.AluguerRepository;
 import com.filmees.backend.repository.ClienteRepository;
+import com.filmees.backend.repository.FilmeRepository;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class AluguerController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private FilmeRepository filmeRepository;
+
     @GetMapping
     public ResponseEntity<?> listarTodos(HttpServletRequest request) {
         if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
@@ -43,7 +48,38 @@ public class AluguerController {
         if (!SecurityUtil.isCliente(request)) {
             return ResponseEntity.status(403).body("Apenas clientes autenticados podem alugar filmes.");
         }
-        return ResponseEntity.ok(aluguerRepository.save(novoAluguer));
+
+        if (novoAluguer.getCliente() == null || novoAluguer.getCliente().getIdCliente() == null) {
+            return ResponseEntity.badRequest().body("Cliente inválido.");
+        }
+
+        if (novoAluguer.getFilmes() == null || novoAluguer.getFilmes().isEmpty()) {
+            return ResponseEntity.badRequest().body("É necessário pelo menos um filme.");
+        }
+
+        // Validar cliente
+        Optional<Cliente> clienteOpt = clienteRepository.findById(novoAluguer.getCliente().getIdCliente());
+        if (clienteOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Cliente não encontrado.");
+        }
+
+        // Carregar filmes por ID (para evitar objetos incompletos)
+        List<Integer> idsFilmes = novoAluguer.getFilmes().stream()
+                .map(Filme::getIdFilme)
+                .toList();
+
+        List<Filme> filmesValidos = filmeRepository.findAllById(idsFilmes);
+
+        if (filmesValidos.isEmpty()) {
+            return ResponseEntity.badRequest().body("Filmes inválidos.");
+        }
+
+        novoAluguer.setCliente(clienteOpt.get());
+        novoAluguer.setFilmes(filmesValidos);
+        novoAluguer.setEstado("pendente");
+
+        Aluguer aluguerGravado = aluguerRepository.save(novoAluguer);
+        return ResponseEntity.ok(aluguerGravado);
     }
 
     @DeleteMapping("/{id}")
