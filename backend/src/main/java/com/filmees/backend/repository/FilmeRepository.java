@@ -14,12 +14,12 @@ import java.util.List;
 public interface FilmeRepository extends JpaRepository<Filme, Integer> {
     List<Filme> findByTituloContainingIgnoreCase(String titulo);
     @Query("""
-                SELECT f FROM Filme f 
-                JOIN Aluguer a ON f.idFilme = a.filme.idFilme 
-                WHERE a.dataLevantamento >= :dataLimite 
-                GROUP BY f.idFilme 
-                ORDER BY COUNT(a.filme.idFilme) DESC
-            """)
+    SELECT f FROM Filme f
+    JOIN f.alugueres a
+    WHERE (a.dataLevantamento >= :dataLimite) AND a.estado ='alugado'
+    GROUP BY f.idFilme
+    ORDER BY COUNT(f.idFilme) DESC
+""")
     List<Filme> findMaisAlugadosUltimaSemana(@Param("dataLimite") LocalDate dataLimite);
 
     @Query(value = """

@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface AluguerRepository extends JpaRepository<Aluguer, Integer> {
     List<Aluguer> findByCliente_IdCliente(Integer idCliente);
-    List<Aluguer> findByFilme_IdFilme(Integer idFilme);
+    List<Aluguer> findByFilmes_IdFilme(Integer idFilme);
 }

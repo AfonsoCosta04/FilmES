@@ -76,7 +76,7 @@ public class AluguerController {
 
         novoAluguer.setCliente(clienteOpt.get());
         novoAluguer.setFilmes(filmesValidos);
-        novoAluguer.setEstado("pendente");
+        novoAluguer.setEstado("reservado");
 
         Aluguer aluguerGravado = aluguerRepository.save(novoAluguer);
         return ResponseEntity.ok(aluguerGravado);

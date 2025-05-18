@@ -63,6 +63,7 @@ public class Filme {
     private List<CarrinhoFilme> carrinhos;
 
     @ManyToMany(mappedBy = "filmes")
+    @JsonIgnore
     private List<Aluguer> alugueres;
 
     // Getters e Setters
