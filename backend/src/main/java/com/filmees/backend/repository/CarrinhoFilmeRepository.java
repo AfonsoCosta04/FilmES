@@ -11,6 +11,6 @@ import java.util.List;
 // CarrinhoFilme Repository
 @Repository
 public interface CarrinhoFilmeRepository extends JpaRepository<CarrinhoFilme, Integer> {
-    @Query("SELECT cf FROM CarrinhoFilme cf WHERE cf.carrinho.idCarrinho = :idCarrinho")
-    List<CarrinhoFilme> findByIdCarrinho(@Param("idCarrinho") Integer idCarrinho);
+    List<CarrinhoFilme> findByCarrinho_IdCarrinho(Integer idCarrinho);
+    void deleteByCarrinhoIdCarrinho(Integer idCarrinho);
 }

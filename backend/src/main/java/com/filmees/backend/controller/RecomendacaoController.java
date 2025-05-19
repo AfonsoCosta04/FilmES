@@ -34,9 +34,9 @@ public class RecomendacaoController {
             return ResponseEntity.status(401).body("Token ausente ou inválido.");
         }
 
-        token = token.substring(7); // remover "Bearer "
+        token = token.substring(7);
 
-        String email = jwtUtil.extractUsername(token); // sub = email
+        String email = jwtUtil.extractUsername(token);
         Funcionario funcionario = funcionarioRepository.findByEmailFuncionario(email)
                 .orElse(null);
 

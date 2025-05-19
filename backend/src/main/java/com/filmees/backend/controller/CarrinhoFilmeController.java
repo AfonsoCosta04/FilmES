@@ -51,7 +51,7 @@ public class CarrinhoFilmeController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
-        List<Filme> filmes = carrinhoFilmeRepository.findByIdCarrinho(idCarrinho)
+        List<Filme> filmes = carrinhoFilmeRepository.findByCarrinho_IdCarrinho(idCarrinho)
                 .stream().map(CarrinhoFilme::getFilme).toList();
 
         return ResponseEntity.ok(filmes);

@@ -1,13 +1,13 @@
 package com.filmees.backend.controller;
 
 import com.filmees.backend.model.Aluguer;
+import com.filmees.backend.model.Carrinho;
 import com.filmees.backend.model.Cliente;
 import com.filmees.backend.model.Filme;
-import com.filmees.backend.repository.AluguerRepository;
-import com.filmees.backend.repository.ClienteRepository;
-import com.filmees.backend.repository.FilmeRepository;
+import com.filmees.backend.repository.*;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +29,12 @@ public class AluguerController {
     @Autowired
     private FilmeRepository filmeRepository;
 
+    @Autowired
+    private CarrinhoFilmeRepository carrinhoFilmeRepository;
+
+    @Autowired
+    private CarrinhoRepository carrinhoRepository;
+
     @GetMapping
     public ResponseEntity<?> listarTodos(HttpServletRequest request) {
         if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
@@ -43,6 +49,7 @@ public class AluguerController {
         return aluguer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<?> criarAluguer(@RequestBody Aluguer novoAluguer, HttpServletRequest request) {
         if (!SecurityUtil.isCliente(request)) {
@@ -77,6 +84,12 @@ public class AluguerController {
         novoAluguer.setCliente(clienteOpt.get());
         novoAluguer.setFilmes(filmesValidos);
         novoAluguer.setEstado("reservado");
+        Carrinho carrinho = carrinhoRepository.findByIdCliente(clienteOpt.get().getIdCliente())
+                .orElse(null);
+
+        if (carrinho != null) {
+            carrinhoFilmeRepository.deleteByCarrinhoIdCarrinho(carrinho.getIdCarrinho());
+        }
 
         Aluguer aluguerGravado = aluguerRepository.save(novoAluguer);
         return ResponseEntity.ok(aluguerGravado);
