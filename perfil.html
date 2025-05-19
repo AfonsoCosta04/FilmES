@@ -6,7 +6,240 @@
   <title>Perfil do Utilizador</title>
   <link rel="icon" href="imagens/favicon.ico" type="image/x-icon">
   <style>
-    /* Estilos omitidos por brevidade */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+    }
+  
+    html, body {
+      overflow-x: hidden;
+    }
+  
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #000;
+      color: white;
+      padding: 10px 30px;
+    }
+  
+    .logo img {
+      height: 40px;
+    }
+  
+    .esquerda {
+      flex: 10;
+      text-align: left;
+    }
+  
+    .direita {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  
+    .esquerda a,
+    .direita a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      margin: 0 10px;
+    }
+  
+    .esquerda a:hover,
+    .direita a:hover {
+      color: #FFD700;
+    }
+  
+    .header a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      margin: 0 10px;
+    }
+  
+    .header a:hover {
+      color: #FFD700;
+    }
+  
+    .header-funcionarios-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #000;
+      color: white;
+      padding: 10px 30px;
+    }
+  
+    .background-image {
+      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.65)),
+      url('imagens/background.png') center/cover no-repeat;
+      background-attachment: fixed;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      display: flex;
+      justify-content: center;
+    }
+  
+    .perfil-wrapper {
+  background-color: rgba(19, 19, 19, 0.9); /* alterado */
+  color: white;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 25px;
+  display: flex;
+  padding: 30px;
+  gap: 30px;
+}
+  
+  /* LADO ESQUERDO */
+.lado-esquerdo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 200px;
+}
+  
+.perfil-top-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-bottom: 30px;
+  margin-top: -10px;
+}
+  
+.perfil-top-left img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+  
+    .menu {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: 30px;
+    }
+  
+    .menu a {
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #fff;
+  color: #000000;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.menu a:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.menu a.active {
+  background-color: #000;
+  color: #fff;
+}
+
+  
+    /* LADO DIREITO */
+    .lado-direito {
+      flex: 1;
+    }
+  
+    .titulo-perfil {
+      text-align: center;
+      font-size: 20px; /* reduzido */
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  
+    .form-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      border-radius: 20px;
+      margin-bottom: 12px; /* ajustado */
+      padding: 8px 10px; /* reduzido */
+    }
+  
+    .form-group label {
+      flex: 0 0 100px; /* reduzido */
+      font-weight: bold;
+      font-size: 14px; /* reduzido */
+      color: black;
+    }
+  
+    .form-group input {
+      flex: 1;
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 8px; /* reduzido */
+      border-radius: 12px; /* reduzido */
+      margin-left: 10px;
+      font-size: 14px; /* reduzido */
+    }
+  
+    .form-group input:disabled {
+      background-color: #555;
+    }
+  
+    .form-group .edit-icon {
+      cursor: pointer;
+      font-size: 16px; /* ligeiramente menor */
+      margin-left: 10px;
+    }
+  
+    .btn-salvar {
+  margin-top: 25px;
+  float: right;
+  background: linear-gradient(45deg, #ff5733, #ffbd33);
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+    .btn-salvar:hover {
+  background: linear-gradient(45deg, #ffbd33, #ff5733);
+  transform: scale(1.05);
+}
+
+    .btn-salvar:active {
+  transform: scale(0.95);
+}
+  
+    footer {
+      text-align: center;
+      background-color: #000;
+      color: white;
+      padding: 15px;
+      font-size: 14px;
+    }
+  
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+  
+    .social-links a:hover {
+      color: #FFD700;
+    }
   </style>
 </head>
 <body>
@@ -33,16 +266,14 @@
     <!-- Lado esquerdo -->
     <div class="lado-esquerdo">
       <div class="perfil-top-left">
-        <img src="imagens/cliente.jpg" alt="Foto de perfil">
         <div class="user-info-inline">
-          <h3>Nome de Utilizador</h3>
-          <p>exemplo@mail.com</p>
+      
         </div>
       </div>
       <div class="menu">
-        <a href="perfil.html" class="active">Perfil</a>
-        <a href="historico.html">Historico de compras</a>
-        <a href="definicoes.html">Definições</a>
+      
+        <a href="wishlist.html">Lista de Desejos</a>
+        <a href="terminasessão.html">Terminar Sessão</a>
       </div>
     </div>
 
@@ -53,40 +284,34 @@
       <div class="form-group">
         <label>Email</label>
         <input type="email" value="exemplo@mail.com" disabled>
-        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+
       </div>
 
       <div class="form-group">
         <label>Utilizador</label>
         <input type="text" value="Nome de Utilizador" disabled>
-        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+    
       </div>
 
       <div class="form-group">
         <label>Password</label>
         <input type="password" value="************" disabled>
-        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+   
       </div>
 
       <div class="form-group">
         <label>Telemóvel</label>
         <input type="tel" placeholder="Número de telemóvel" disabled>
-        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
-      </div>
 
-      <div class="form-group">
-        <label>Data de Nascimento</label>
-        <input type="date" disabled>
-        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
       </div>
 
       <div class="form-group">
         <label>NIF</label>
         <input type="text" placeholder="NIF" disabled>
-        <span class="edit-icon" onclick="toggleEdit(this)">✎</span>
+        
       </div>
 
-      <button class="btn-salvar">Salvar</button>
+      <button class="btn-salvar">Editar</button>
     </div>
   </div>
 </div>
