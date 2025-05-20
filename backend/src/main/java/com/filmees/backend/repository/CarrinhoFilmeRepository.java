@@ -13,4 +13,6 @@ import java.util.List;
 public interface CarrinhoFilmeRepository extends JpaRepository<CarrinhoFilme, Integer> {
     List<CarrinhoFilme> findByCarrinho_IdCarrinho(Integer idCarrinho);
     void deleteByCarrinhoIdCarrinho(Integer idCarrinho);
+    int countByCarrinho_IdCarrinho(Integer idCarrinho);
+
 }

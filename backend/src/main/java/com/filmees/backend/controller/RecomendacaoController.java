@@ -1,16 +1,21 @@
 package com.filmees.backend.controller;
 
+import com.filmees.backend.model.Filme;
 import com.filmees.backend.model.Funcionario;
+import com.filmees.backend.model.Recomendacao;
+import com.filmees.backend.model.RecomendacaoFilme;
+import com.filmees.backend.repository.FilmeRepository;
 import com.filmees.backend.repository.FuncionarioRepository;
-import com.filmees.backend.security.JwtUtil;
-import com.filmees.backend.service.RecomendacaoService;
+import com.filmees.backend.repository.RecomendacaoFilmeRepository;
+import com.filmees.backend.repository.RecomendacaoRepository;
+import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/recomendacoes")
@@ -18,38 +23,61 @@ import java.util.List;
 public class RecomendacaoController {
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private RecomendacaoRepository recomendacaoRepository;
+
+    @Autowired
+    private RecomendacaoFilmeRepository recomendacaoFilmeRepository;
+
+    @Autowired
+    private FilmeRepository filmeRepository;
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    @Autowired
-    private RecomendacaoService recomendacaoService;
+    @PostMapping("/recomendarfilmes")
+    public ResponseEntity<?> recomendarFilmes(
+            @RequestBody Map<String, Object> payload,
+            HttpServletRequest request) {
 
-    @PostMapping
-    @PreAuthorize("hasAuthority('FUNCIONARIO')")
-    public ResponseEntity<?> recomendarFilmes(@RequestBody List<Integer> filmes, HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        if (token == null || !token.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("Token ausente ou inválido.");
+        if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
-        token = token.substring(7);
+        Integer idFuncionario = Integer.parseInt(payload.get("idFuncionario").toString());
+        List<Integer> filmesIds = (List<Integer>) payload.get("filmes");
 
-        String email = jwtUtil.extractUsername(token);
-        Funcionario funcionario = funcionarioRepository.findByEmailFuncionario(email)
-                .orElse(null);
+        if (filmesIds == null || filmesIds.size() != 5) {
+            return ResponseEntity.badRequest().body("Tens de selecionar exatamente 5 filmes.");
+        }
 
+        Funcionario funcionario = funcionarioRepository.findById(idFuncionario).orElse(null);
         if (funcionario == null) {
-            return ResponseEntity.status(404).body("Funcionário não encontrado.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não encontrado.");
         }
 
-        recomendacaoService.guardarRecomendacao(funcionario.getIdFuncionario(), filmes);
-        return ResponseEntity.ok("Recomendação guardada com sucesso.");
-    }
+        // Apagar recomendação anterior (se existir)
+        Optional<Recomendacao> antiga = recomendacaoRepository.findByFuncionario(funcionario);
+        antiga.ifPresent(recomendacaoExistente -> {
+            recomendacaoFilmeRepository.deleteByRecomendacao(recomendacaoExistente);
+            recomendacaoRepository.delete(recomendacaoExistente);
+        });
 
-    @GetMapping
-    public ResponseEntity<?> listarRecomendacoes() {
-        return ResponseEntity.ok(recomendacaoService.listarRecomendacoes());
+        // Criar nova recomendação (sem data)
+        Recomendacao nova = new Recomendacao();
+        nova.setFuncionario(funcionario);
+        recomendacaoRepository.save(nova);
+
+        // Associar os 5 filmes
+        for (Integer idFilme : filmesIds) {
+            Filme filme = filmeRepository.findById(idFilme).orElse(null);
+            if (filme == null) continue;
+
+            RecomendacaoFilme rf = new RecomendacaoFilme();
+            rf.setRecomendacao(nova);
+            rf.setFilme(filme);
+            recomendacaoFilmeRepository.save(rf);
+        }
+
+        return ResponseEntity.ok("Recomendação guardada com sucesso!");
     }
 }

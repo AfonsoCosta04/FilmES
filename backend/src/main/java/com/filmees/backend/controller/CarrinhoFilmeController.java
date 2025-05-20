@@ -150,4 +150,25 @@ public class CarrinhoFilmeController {
 
         return ResponseEntity.ok(total);
     }
+
+    @GetMapping("/carrinho/{idCarrinho}/quantidade")
+    public ResponseEntity<?> contarFilmesNoCarrinho(@PathVariable Integer idCarrinho,
+                                                    HttpServletRequest request) {
+        Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarrinho);
+        if (carrinho.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Cliente> cliente = clienteRepository.findById(carrinho.get().getIdCliente());
+        if (cliente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Cliente não encontrado.");
+        }
+
+        if (!SecurityUtil.isProprio(request, cliente.get().getEmailCliente())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
+        }
+
+        int quantidade = carrinhoFilmeRepository.countByCarrinho_IdCarrinho(idCarrinho);
+        return ResponseEntity.ok(quantidade);
+    }
 }

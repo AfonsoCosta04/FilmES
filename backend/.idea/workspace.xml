@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5343e343-7433-4481-a34a-01e0e146559b" name="Changes" comment="Atualização de ficheiros">
-      <change beforePath="$PROJECT_DIR$/../FilmES.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../FilmES.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/CarrinhoFilmeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/CarrinhoFilmeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/RecomendacaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/RecomendacaoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/CarrinhoFilmeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/CarrinhoFilmeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/RecomendacaoFilmeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/RecomendacaoFilmeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/RecomendacaoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/RecomendacaoRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../filme.s" beforeDir="false" afterPath="$PROJECT_DIR$/../filme.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

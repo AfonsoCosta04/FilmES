@@ -99,7 +99,6 @@ public class AuthController {
             response.put("tipoUtilizador", tipoUtilizador);
             response.put("nome", cliente.get().getNomeCliente());
             response.put("email", cliente.get().getEmailCliente());
-
             if (carrinho != null) {
                 response.put("idCarrinho", carrinho.getIdCarrinho());
             }
