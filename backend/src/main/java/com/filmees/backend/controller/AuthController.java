@@ -75,14 +75,17 @@ public class AuthController {
         Optional<Funcionario> funcionario = funcionarioRepository.findByEmailFuncionario(request.getEmail());
         if (funcionario.isPresent() && passwordEncoder.matches(request.getPassword(), funcionario.get().getPasswordFuncionario())) {
             int tipoUtilizador = 2;
-            int idFunc = funcionario.get().getIdFuncionario();
-            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador, idFunc);
+            Funcionario f = funcionario.get();
+            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador, f.getIdFuncionario());
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("tipoUtilizador", tipoUtilizador);
-            response.put("id", funcionario.get().getIdFuncionario());
-            response.put("nome", funcionario.get().getNomeFuncionario());
-            response.put("email", funcionario.get().getEmailFuncionario());
+            response.put("id", f.getIdFuncionario());
+            response.put("nome", f.getNomeFuncionario());
+            response.put("email", f.getEmailFuncionario());
+            response.put("permLeitura",f.getPermLeitura());
+            response.put("permCriacao",f.getPermCriacao());
+            response.put("permEdicao",f.getPermEdicao());
 
             rateLimiter.reset(key);
 
