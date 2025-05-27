@@ -12,6 +12,11 @@ ALTER TABLE `carrinho_filme` DROP FOREIGN KEY `carrinho_filme_ibfk_2`;
 ALTER TABLE `carrinho` DROP FOREIGN KEY `carrinho_ibfk_1`;
 ALTER TABLE `cliente` DROP FOREIGN KEY `cliente_ibfk_1`;
 ALTER TABLE `funcionario` DROP FOREIGN KEY `funcionario_ibfk_1`;
+ALTER TABLE `listadesejos` DROP FOREIGN KEY `listadesejos_ibfk_1`;
+ALTER TABLE `listadesejos` DROP FOREIGN KEY `listadesejos_ibfk_2`;
+ALTER TABLE `recomendacao` DROP FOREIGN KEY `recomendacao_ibfk_1`;
+ALTER TABLE `recomendacao_filme` DROP FOREIGN KEY `recomendacao_filme_ibfk_1`;
+ALTER TABLE `recomendacao_filme` DROP FOREIGN KEY `recomendacao_filme_ibfk_2`;
 
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `aluguer`;
@@ -21,6 +26,9 @@ DROP TABLE IF EXISTS `carrinho_filme`;
 DROP TABLE IF EXISTS `cliente`;
 DROP TABLE IF EXISTS `filme`;
 DROP TABLE IF EXISTS `funcionario`;
+DROP TABLE IF EXISTS `listadesejos`;
+DROP TABLE IF EXISTS `recomendacao`;
+DROP TABLE IF EXISTS `recomendacao_filme`;
 DROP TABLE IF EXISTS `tipo_utilizador`;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -121,14 +129,14 @@ CREATE TABLE `filme` (
 
 INSERT INTO `filme` (`id_filme`, `titulo`, `ano`, `duracao_horas`, `duracao_minutos`, `imdb`, `rotten_tomatoes`, `genero1`, `genero2`, `genero3`, `ator1`, `ator2`, `ator3`, `sinopse`, `preco`, `foto`, `disponivel`, `idade_recomendada`) VALUES
     (1, 'Dune: Part 2', 2024, 2, 48, 8.5, '95', 'Sci-Fi', 'Aventura', 'Ação', 'Timothée Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Enfrentando uma escolha entre o amor de sua vida e o destino do universo, ele deve evitar um futuro terrível que só ele pode prever.', 5.00, 'imagens/Duna.jpg', 0, 16),
-    (2, 'Interstellar', 2014, 2, 49, 8.0, '87', 'Épico', 'Sci-Fi', 'Drama', 'Matthew McConaughey', 'Anne Hathaway', 'Jessica Chastain', 'When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.', 4.50, 'imagens/71-uZ6tkY8L._AC_SL1500_.jpg', 0, 0),
-    (3, 'Fight Club', 1999, 2, 19, 8.0, '96', 'Thriller', 'Crime', 'Drama', 'Edward Norton', 'Brad Pitt', 'Helena Bonham Carter', 'Um trabalhador de escritório e um fabricante de sabonetes formam um clube de luta clandestino que evolui para algo muito maior.', 6.00, 'imagens/fight club.jpeg', 1, 0),
-    (4, 'La La Land', 2016, 2, 0, 8.0, '82', 'Musical', 'Drama', 'Comédia', 'Ryan Gosling', 'Emma Stone', '', 'Um pianista é uma frustrada actora se apaixonam enquanto tentam trabalhar por seus futuros.', 5.80, 'imagens/la la land.jpg', 0, 0),
-    (5, 'DeadPool & Wolverine', 2024, 2, 40, 22.0, '22', 'asd', '', '', 'asd', '', '', 'dsa', 4.00, 'imagens/deadpool.jpeg', 1, 0),
-    (6, 'Evil Dead 2', 1987, 1, 25, 7.0, '89', 'Terror', 'Comédia', '', 'Bruce Campbell', ' Sarah Berry', ' Denise Bixler', 'O único sobrevivente de uma avalanche de espíritos possuidores de carne entra em uma cabana com um grupo de estranhos, enquanto os demônios continuam seu ataque.', 4.00, 'imagens/EvilDead2.jpg', 1, 0),
+    (2, 'Interstellar', 2014, 2, 49, 8.0, '87', 'Épico', 'Sci-Fi', 'Drama', 'Matthew McConaughey', 'Anne Hathaway', 'Jessica Chastain', 'When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.', 4.50, 'imagens/71-uZ6tkY8L._AC_SL1500_.jpg', 0, 12),
+    (3, 'Fight Club', 1999, 2, 19, 8.0, '96', 'Thriller', 'Crime', 'Drama', 'Edward Norton', 'Brad Pitt', 'Helena Bonham Carter', 'Um trabalhador de escritório e um fabricante de sabonetes formam um clube de luta clandestino que evolui para algo muito maior.', 6.00, 'imagens/fight club.jpeg', 1, 18),
+    (4, 'La La Land', 2016, 2, 0, 8.0, '82', 'Musical', 'Drama', 'Comédia', 'Ryan Gosling', 'Emma Stone', '', 'Um pianista é uma frustrada actora se apaixonam enquanto tentam trabalhar por seus futuros.', 5.80, 'imagens/la la land.jpg', 0, 12),
+    (5, 'DeadPool & Wolverine', 2024, 2, 40, 22.0, '22', 'asd', '', '', 'asd', '', '', 'dsa', 4.00, 'imagens/deadpool.jpeg', 1, 18),
+    (6, 'Evil Dead 2', 1987, 1, 25, 7.0, '89', 'Terror', 'Comédia', '', 'Bruce Campbell', ' Sarah Berry', ' Denise Bixler', 'O único sobrevivente de uma avalanche de espíritos possuidores de carne entra em uma cabana com um grupo de estranhos, enquanto os demônios continuam seu ataque.', 4.00, 'imagens/EvilDead2.jpg', 1, 18),
     (7, 'A Minecraft Movie', 2025, 1, 41, 6.0, '88', 'Comédia', '', '', 'Jack Black', 'Jason Momoa', 'Danielle Brooks', 'Quatro desajustados são transportados para um bizarro país das maravilhas cúbico onde impera a imaginação. Para voltar para casa, eles terão que dominar este mundo enquanto embarcam em uma missão com um experiente construtor imprevisível.', 8.00, 'imagens/minecraft.jpg', 0, 3),
-    (8, 'Pantera Negra', 2018, 2, 14, 7.0, '79', 'Super Heróis', 'Aventura', '', 'Chadwick Boseman', 'Michael B. Jordan', 'Lupita Nyong\'o', 'T\'Challa, herdeiro do reino oculto, mas avançado de Wakanda, deve dar um passo adiante para conduzir seu povo a um novo futuro e deve enfrentar um adversário do passado de seu país.', 4.00, 'imagens/Pantera Negra.jpg', 1, 12),
-    (9, 'Baby Driver', 2017, 1, 53, 7.0, '92', 'Ação', 'Crime', 'Drama', 'Ansel Elgort', 'Jon Hamm', 'Lily James', 'Depois de ser obrigado a trabalhar para um chefe do crime, um jovem condutor se ve envolvido num assalto destinado a fracassar.', 4.90, 'imagens/Baby Driver.jpg', 1, 0),
+    (8, 'Pantera Negra', 2018, 2, 14, 7.0, '79', 'Super Heróis', 'Aventura', '', 'Chadwick Boseman', 'Michael B. Jordan', 'Lupita Nyong\'o', 'T\'Challa, herdeiro do reino oculto, mas avançado de Wakanda, deve dar um passo adiante para conduzir seu povo a um novo futuro e deve enfrentar um adversário do passado de seu país.', 4.00, 'imagens/Pantera Negra.jpg', 1, 14),
+    (9, 'Baby Driver', 2017, 1, 53, 7.0, '92', 'Ação', 'Crime', 'Drama', 'Ansel Elgort', 'Jon Hamm', 'Lily James', 'Depois de ser obrigado a trabalhar para um chefe do crime, um jovem condutor se ve envolvido num assalto destinado a fracassar.', 4.90, 'imagens/Baby Driver.jpg', 1, 14),
     (10, 'Pulp Fiction', 1996, 2, 34, 8.9, '92', 'Crime', 'Humor Negro', 'Gangster', 'John Travolta', 'Samuel L Jackson', 'Bruce Willis', 'As vidas de dois assassinos da máfia, um boxeador, um gângster e sua esposa, e um par de bandidos se entrelaçam em quatro histórias de violência e redenção.', 6.50, 'imagens/Pulp_Fiction.jpg', 1, 18);
 
 CREATE TABLE `funcionario` (
@@ -150,6 +158,12 @@ INSERT INTO `funcionario` (`id_funcionario`, `nome_funcionario`, `email_funciona
     (3, 'Bruno Fernandes', 'brunaocanhao@hotmail.com', '1223333333', 'cenas123', 1, 1, 1, 2, 'imagens/default.jpg'),
     (4, 'sdasd', 'adsdsa@ho', '2134432', 'asdasdasd', 0, 1, 0, 2, 'imagens/default.jpg');
     
+CREATE TABLE `listadesejos` (
+  `id_lista_desejo` int(11) AUTO_INCREMENT PRIMARY KEY,
+  `id_cliente` int(11) NOT NULL,
+  `id_filme` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `recomendacao`(
 	`id_recomendacao` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `id_funcionario` INT(11) NOT NULL
@@ -176,22 +190,22 @@ ALTER TABLE `admin`
 	ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipo_utilizador`(`id_tipo`);
     
 ALTER TABLE `aluguer`
-    ADD CONSTRAINT `aluguer_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente`(`id_cliente`);
+    ADD CONSTRAINT `aluguer_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente`(`id_cliente`) ON DELETE CASCADE;
 
 ALTER TABLE `aluguer_filme`
 	ADD KEY (`id_aluguer`),
     ADD KEY (`id_filme`),
-	ADD CONSTRAINT `aluguer_filme_ibfk_1` FOREIGN KEY (`id_aluguer`) REFERENCES `aluguer`(`id_aluguer`),
-	ADD CONSTRAINT `aluguer_filme_ibfk_2` FOREIGN KEY (`id_filme`) REFERENCES `filme`(`id_filme`);
+	ADD CONSTRAINT `aluguer_filme_ibfk_1` FOREIGN KEY (`id_aluguer`) REFERENCES `aluguer`(`id_aluguer`)  ON DELETE CASCADE,
+	ADD CONSTRAINT `aluguer_filme_ibfk_2` FOREIGN KEY (`id_filme`) REFERENCES `filme`(`id_filme`)  ON DELETE CASCADE;
     
 ALTER TABLE `carrinho`
-	ADD CONSTRAINT `carrinho_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
+	ADD CONSTRAINT `carrinho_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`)  ON DELETE CASCADE;
 
 ALTER TABLE `carrinho_filme`
-	ADD KEY `id_carrinho` (`id_carrinho`),
-	ADD KEY `id_filme` (`id_filme`),
-	ADD CONSTRAINT `carrinho_filme_ibfk_1` FOREIGN KEY (`id_carrinho`) REFERENCES `carrinho` (`id_carrinho`),
-	ADD CONSTRAINT `carrinho_filme_ibfk_2` FOREIGN KEY (`id_filme`) REFERENCES `filme` (`id_filme`);
+	ADD KEY (`id_carrinho`),
+	ADD KEY (`id_filme`),
+	ADD CONSTRAINT `carrinho_filme_ibfk_1` FOREIGN KEY (`id_carrinho`) REFERENCES `carrinho` (`id_carrinho`)  ON DELETE CASCADE,
+	ADD CONSTRAINT `carrinho_filme_ibfk_2` FOREIGN KEY (`id_filme`) REFERENCES `filme` (`id_filme`) ON DELETE CASCADE;
 
  ALTER TABLE `cliente`
 	ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipo_utilizador`(`id_tipo`);
@@ -199,11 +213,14 @@ ALTER TABLE `carrinho_filme`
  ALTER TABLE `funcionario`
 	ADD CONSTRAINT `funcionario_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipo_utilizador`(`id_tipo`);
 
+ALTER TABLE `listadesejos`
+  ADD UNIQUE KEY `id_cliente` (`id_cliente`,`id_filme`),
+  ADD CONSTRAINT `listadesejos_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`) ON DELETE CASCADE,
+  ADD CONSTRAINT `listadesejos_ibfk_2` FOREIGN KEY (`id_filme`) REFERENCES `filme` (`id_filme`) ON DELETE CASCADE;
+  
 ALTER TABLE `recomendacao`
-	ADD CONSTRAINT `recomendacao_ibfk_1` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionario`(`id_funcionario`);
+	ADD CONSTRAINT `recomendacao_ibfk_1` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionario`(`id_funcionario`) ON DELETE CASCADE;
     
 ALTER TABLE `recomendacao_filme`
-	ADD CONSTRAINT `recomendacao_filme_ibfk_1`FOREIGN KEY (`id_recomendacao`) REFERENCES `recomendacao`(`id_recomendacao`),
-    ADD CONSTRAINT `recomendacao_filme_ibfk_2`FOREIGN KEY (`id_filme`) REFERENCES `filme` (`id_filme`);
-
-COMMIT;
+	ADD CONSTRAINT `recomendacao_filme_ibfk_1`FOREIGN KEY (`id_recomendacao`) REFERENCES `recomendacao`(`id_recomendacao`) ON DELETE CASCADE,
+    ADD CONSTRAINT `recomendacao_filme_ibfk_2`FOREIGN KEY (`id_filme`) REFERENCES `filme` (`id_filme`) ON DELETE CASCADE;

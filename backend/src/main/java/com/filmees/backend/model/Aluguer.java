@@ -2,6 +2,7 @@ package com.filmees.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class Aluguer {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
+    @JsonIgnore
     private Cliente cliente;
 
     private LocalDate dataLevantamento;
@@ -68,7 +70,11 @@ public class Aluguer {
         this.estado = estado;
     }
 
-    public List<Filme> getFilmes(){ return filmes; }
+    public List<Filme> getFilmes() {
+        return filmes;
+    }
 
-    public void setFilmes(List<Filme> filmes) { this.filmes = filmes; }
+    public void setFilmes(List<Filme> filmes) {
+        this.filmes = filmes;
+    }
 }
