@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -70,6 +72,19 @@ public class AluguerController {
 
         if (novoAluguer.getFilmes() == null || novoAluguer.getFilmes().isEmpty()) {
             return ResponseEntity.badRequest().body("É necessário pelo menos um filme.");
+        }
+
+        LocalDate dataLev = novoAluguer.getDataLevantamento();
+        LocalDate dataDev = novoAluguer.getDataDevolucao();
+        if (dataLev == null || dataDev == null) {
+            return ResponseEntity.badRequest().body("Datas de levantamento e devolução são obrigatórias.");
+        }
+        if (dataDev.isBefore(dataLev)) {
+            return ResponseEntity.badRequest().body("Data de devolução não pode ser anterior à de levantamento.");
+        }
+        long dias = ChronoUnit.DAYS.between(dataLev, dataDev);
+        if (dias > 10) {
+            return ResponseEntity.badRequest().body("O prazo máximo de aluguel é de 10 dias.");
         }
 
         // Carregar filmes por ID (para evitar objetos incompletos)
