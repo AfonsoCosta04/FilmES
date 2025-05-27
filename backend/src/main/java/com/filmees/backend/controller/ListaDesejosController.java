@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/lista-desejos")
@@ -40,9 +41,10 @@ public class ListaDesejosController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
-        List<ListaDesejos> lista = listaDesejosRepository.findByCliente_IdCliente(idCliente);
-        List<Filme> filmes = lista.stream().map(ListaDesejos::getFilme).toList();
-
+        List<ListaDesejos> desejos = listaDesejosRepository.findByCliente_IdCliente(cliente.getIdCliente());
+        List<Filme> filmes = desejos.stream()
+                .map(ListaDesejos::getFilme)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(filmes);
     }
 

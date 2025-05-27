@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5343e343-7433-4481-a34a-01e0e146559b" name="Changes" comment="Atualização de ficheiros">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ListaDesejosController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/ListaDesejos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/ListaDesejosRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FilmES.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../FilmES.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ClienteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Aluguer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Aluguer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ListaDesejosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ListaDesejosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/AluguerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/AluguerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../filme.s" beforeDir="false" afterPath="$PROJECT_DIR$/../filme.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,14 +81,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744737452072</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1746741625205</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1746741625205</updated>
     </task>
     <task id="LOCAL-00067" summary="Commit">
       <option name="closed" value="true" />
@@ -475,7 +466,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747778100865</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1748344026802</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1748344026802</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

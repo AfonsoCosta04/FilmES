@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/alugueres")
@@ -56,18 +58,18 @@ public class AluguerController {
             return ResponseEntity.status(403).body("Apenas clientes autenticados podem alugar filmes.");
         }
 
-        if (novoAluguer.getCliente() == null || novoAluguer.getCliente().getIdCliente() == null) {
-            return ResponseEntity.badRequest().body("Cliente inválido.");
+        Integer clienteId = SecurityUtil.getUserId(request);
+        if (clienteId == null) {
+            return ResponseEntity.status(401)
+                    .body("Token inválido ou expirado.");
+        }
+        Optional<Cliente> clienteOpt = clienteRepository.findById(clienteId);
+        if (clienteOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Cliente não encontrado.");
         }
 
         if (novoAluguer.getFilmes() == null || novoAluguer.getFilmes().isEmpty()) {
             return ResponseEntity.badRequest().body("É necessário pelo menos um filme.");
-        }
-
-        // Validar cliente
-        Optional<Cliente> clienteOpt = clienteRepository.findById(novoAluguer.getCliente().getIdCliente());
-        if (clienteOpt.isEmpty()) {
-            return ResponseEntity.badRequest().body("Cliente não encontrado.");
         }
 
         // Carregar filmes por ID (para evitar objetos incompletos)
@@ -75,10 +77,41 @@ public class AluguerController {
                 .map(Filme::getIdFilme)
                 .toList();
 
+        long distintos = idsFilmes.stream().distinct().count();
+        if (distintos != idsFilmes.size()) {
+            return ResponseEntity.badRequest()
+                    .body("Não podes pedir o mesmo filme duas vezes no mesmo aluguer.");
+        }
+
         List<Filme> filmesValidos = filmeRepository.findAllById(idsFilmes);
 
-        if (filmesValidos.isEmpty()) {
-            return ResponseEntity.badRequest().body("Filmes inválidos.");
+        if (filmesValidos.size() != idsFilmes.size()) {
+            return ResponseEntity.badRequest()
+                    .body("Um ou mais filmes inválidos.");
+        }
+
+
+        var estadosAtivos = List.of("reservado", "alugado");
+        List<Aluguer> alugueresAtivos = aluguerRepository
+                .findByCliente_IdClienteAndEstadoIn(clienteId, estadosAtivos);
+
+        Set<Integer> jaAlugados = alugueresAtivos.stream()
+                .flatMap(a -> a.getFilmes().stream())
+                .map(Filme::getIdFilme)
+                .collect(Collectors.toSet());
+
+        for (Integer idFilme : idsFilmes) {
+            if (jaAlugados.contains(idFilme)) {
+                return ResponseEntity.badRequest()
+                        .body("O filme de id " + idFilme + " já está reservado/alugado.");
+            }
+        }
+
+        int totalAtuais = jaAlugados.size();
+        int totalNovos = filmesValidos.size();
+        if (totalAtuais + totalNovos > 5) {
+            return ResponseEntity.badRequest()
+                    .body("Limite de 5 filmes simultâneos excedido.");
         }
 
         novoAluguer.setCliente(clienteOpt.get());

@@ -30,10 +30,11 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(String email, int tipoUtilizador) {
+    public String generateToken(String email, int tipoUtilizador, int idCliente) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("tipoUtilizador", tipoUtilizador)
+                .claim("idCliente", idCliente)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)

@@ -57,7 +57,8 @@ public class AuthController {
         Optional<Admin> admin = adminRepository.findByEmailAdmin(request.getEmail());
         if (admin.isPresent() && passwordEncoder.matches(request.getPassword(), admin.get().getPasswordAdmin())) {
             int tipoUtilizador = 1;
-            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador);
+            int idAdmin = admin.get().getIdAdmin();
+            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador, idAdmin);
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("tipoUtilizador", tipoUtilizador);
@@ -74,7 +75,8 @@ public class AuthController {
         Optional<Funcionario> funcionario = funcionarioRepository.findByEmailFuncionario(request.getEmail());
         if (funcionario.isPresent() && passwordEncoder.matches(request.getPassword(), funcionario.get().getPasswordFuncionario())) {
             int tipoUtilizador = 2;
-            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador);
+            int idFunc = funcionario.get().getIdFuncionario();
+            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador, idFunc);
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("tipoUtilizador", tipoUtilizador);
@@ -90,7 +92,8 @@ public class AuthController {
         Optional<Cliente> cliente = clienteRepository.findByEmailCliente(request.getEmail());
         if (cliente.isPresent() && passwordEncoder.matches(request.getPassword(), cliente.get().getPasswordCliente())) {
             int tipoUtilizador = 3;
-            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador);
+            int idCliente = cliente.get().getIdCliente();
+            String token = jwtUtil.generateToken(request.getEmail(), tipoUtilizador, idCliente);
             Carrinho carrinho = carrinhoRepository.findByIdCliente(cliente.get().getIdCliente()).orElse(null);
 
             Map<String, Object> response = new HashMap<>();

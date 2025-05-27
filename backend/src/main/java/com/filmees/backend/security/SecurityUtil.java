@@ -69,4 +69,16 @@ public class SecurityUtil {
             return false;
         }
     }
+
+    public static Integer getUserId(HttpServletRequest request) {
+        String token = extractToken(request);
+        if (token == null) return null;
+        try {
+            // supondo que o seu JWT inclui a claim "idCliente"
+            return jwtUtil.extractClaim(token,
+                    claims -> Integer.parseInt(claims.get("idCliente").toString()));
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 }
