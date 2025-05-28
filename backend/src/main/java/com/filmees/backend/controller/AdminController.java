@@ -99,7 +99,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
-        String atual = body.get("passwordAtual");
+        String atual =body.get("passwordAtual");
         String nova = body.get("novaPassword");
 
         if (atual == null || nova == null) {
