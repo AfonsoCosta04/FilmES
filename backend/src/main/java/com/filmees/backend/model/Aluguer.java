@@ -15,7 +15,6 @@ public class Aluguer {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
-    @JsonIgnore
     private Cliente cliente;
 
     private LocalDate dataLevantamento;

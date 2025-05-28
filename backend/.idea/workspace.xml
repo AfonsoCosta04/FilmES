@@ -7,11 +7,8 @@
     <list default="true" id="5343e343-7433-4481-a34a-01e0e146559b" name="Changes" comment="Atualização de ficheiros">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AluguerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ListaDesejosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/controller/ListaDesejosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Aluguer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/model/Aluguer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/AluguerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/repository/AluguerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmees/backend/security/SecurityUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../filme.s" beforeDir="false" afterPath="$PROJECT_DIR$/../filme.s" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,19 +45,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.BackendApplication.executor": "Run",
-    "Application.FilmES.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/FilmES/backend",
-    "settings.editor.selected.configurable": "inlay.hints"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.BackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FilmES.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/FilmES/backend&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="FilmES" type="Application" factoryName="Application" activateToolWindowBeforeRun="false">
       <option name="envFilePaths">
@@ -81,54 +78,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744737452072</updated>
-    </task>
-    <task id="LOCAL-00067" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1746741633841</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1746741633841</updated>
-    </task>
-    <task id="LOCAL-00068" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1746741650186</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1746741650186</updated>
-    </task>
-    <task id="LOCAL-00069" summary="Criação de ficheiros">
-      <option name="closed" value="true" />
-      <created>1746742715060</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1746742715060</updated>
-    </task>
-    <task id="LOCAL-00070" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1746780898914</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1746780898914</updated>
-    </task>
-    <task id="LOCAL-00071" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1746780903934</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1746780903934</updated>
-    </task>
-    <task id="LOCAL-00072" summary="Atualização de ficheiros">
-      <option name="closed" value="true" />
-      <created>1746785023101</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1746785023101</updated>
     </task>
     <task id="LOCAL-00073" summary="Commit">
       <option name="closed" value="true" />
@@ -474,7 +423,55 @@
       <option name="project" value="LOCAL" />
       <updated>1748344026802</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1748363774995</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1748363774995</updated>
+    </task>
+    <task id="LOCAL-00117" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1748364609877</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1748364609877</updated>
+    </task>
+    <task id="LOCAL-00118" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1748365017652</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1748365017652</updated>
+    </task>
+    <task id="LOCAL-00119" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1748395211003</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1748395211003</updated>
+    </task>
+    <task id="LOCAL-00120" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1748425728413</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1748425728413</updated>
+    </task>
+    <task id="LOCAL-00121" summary="Atualização de ficheiros">
+      <option name="closed" value="true" />
+      <created>1748426068297</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1748426068297</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

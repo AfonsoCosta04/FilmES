@@ -163,21 +163,49 @@ public class AluguerController {
     }
 
     @GetMapping("/cliente/{id}")
-    public ResponseEntity<?> listarPorCliente(@PathVariable Integer id, HttpServletRequest request) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        if (cliente.isEmpty()) {
+    public ResponseEntity<?> listarPorClienteAlugado(
+            @PathVariable Integer id,
+            HttpServletRequest request) {
+        // verifica se o cliente existe
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+        if (clienteOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        boolean isProprio = SecurityUtil.isProprio(request, cliente.get().getEmailCliente());
+        // só o próprio, funcionário ou admin podem ver
+        boolean isProprio = SecurityUtil.isProprio(request, clienteOpt.get().getEmailCliente());
         boolean isFuncionarioOuAdmin = SecurityUtil.isFuncionario(request) || SecurityUtil.isAdmin(request);
-
         if (!isProprio && !isFuncionarioOuAdmin) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
 
-        List<Aluguer> alugueres = aluguerRepository.findByCliente_IdCliente(id);
-        return ResponseEntity.ok(alugueres);
+        // busca apenas os alugueres desse cliente que estão em "alugado"
+        List<Aluguer> alugueresAlugados = aluguerRepository
+                .findByCliente_IdClienteAndEstado(id, "alugado");
+
+        return ResponseEntity.ok(alugueresAlugados);
     }
 
+    @GetMapping("/reservados")
+    public ResponseEntity<?> listarReservados(HttpServletRequest request) {
+        if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
+            return ResponseEntity.status(403).body("Acesso negado.");
+        }
+
+        List<Aluguer> reservados = aluguerRepository.findByEstadoComCliente("reservado");
+        return ResponseEntity.ok(reservados);
+    }
+
+    @PutMapping("/{id}/alugar")
+    public ResponseEntity<?> marcarComoAlugado(@PathVariable Integer id, HttpServletRequest req) {
+        if (!SecurityUtil.isFuncionario(req) && !SecurityUtil.isAdmin(req)) {
+            return ResponseEntity.status(403).body("Acesso negado.");
+        }
+        Optional<Aluguer> opt = aluguerRepository.findById(id);
+        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+        Aluguer a = opt.get();
+        a.setEstado("alugado");
+        aluguerRepository.save(a);
+        return ResponseEntity.ok().build();
+    }
 }
