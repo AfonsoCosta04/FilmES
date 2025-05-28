@@ -196,7 +196,8 @@ ALTER TABLE `aluguer_filme`
 	ADD KEY (`id_aluguer`),
     ADD KEY (`id_filme`),
 	ADD CONSTRAINT `aluguer_filme_ibfk_1` FOREIGN KEY (`id_aluguer`) REFERENCES `aluguer`(`id_aluguer`)  ON DELETE CASCADE,
-	ADD CONSTRAINT `aluguer_filme_ibfk_2` FOREIGN KEY (`id_filme`) REFERENCES `filme`(`id_filme`)  ON DELETE CASCADE;
+	ADD CONSTRAINT `aluguer_filme_ibfk_2` FOREIGN KEY (`id_filme`) REFERENCES `filme`(`id_filme`)  ON DELETE CASCADE,
+	ADD CONSTRAINT `aluguer_filmes` UNIQUE (`id_aluguer`, `id_filme`);
     
 ALTER TABLE `carrinho`
 	ADD CONSTRAINT `carrinho_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`)  ON DELETE CASCADE;
