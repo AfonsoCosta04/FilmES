@@ -1,5 +1,6 @@
 package com.filmees.backend.controller;
 
+import com.filmees.backend.model.Admin;
 import com.filmees.backend.model.Funcionario;
 import com.filmees.backend.repository.FuncionarioRepository;
 import com.filmees.backend.security.SecurityUtil;
@@ -17,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,10 +43,10 @@ public class FuncionarioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterFuncionario(@PathVariable Integer id, HttpServletRequest request) {
-        if (!SecurityUtil.isAdmin(request)) {
+        Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
+        if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isProprio(request, funcionario.get().getEmailFuncionario())) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
-        Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
         return funcionario.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -89,7 +91,7 @@ public class FuncionarioController {
             @RequestPart(value = "imagem", required = false) MultipartFile imagem,
             HttpServletRequest request) {
 
-        if (!SecurityUtil.isAdmin(request)) {
+        if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isProprio(request, funcionarioAtualizado.getEmailFuncionario())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
@@ -109,6 +111,10 @@ public class FuncionarioController {
             funcionarioAtualizado.setFoto(existente.getFoto());
         }
 
+        funcionarioAtualizado.setPasswordFuncionario(existente.getPasswordFuncionario());
+        funcionarioAtualizado.setPermLeitura(existente.getPermLeitura());
+        funcionarioAtualizado.setPermCriacao(existente.getPermCriacao());
+        funcionarioAtualizado.setPermEdicao(existente.getPermEdicao());
         funcionarioAtualizado.setIdFuncionario(id);
         funcionarioAtualizado.setIdTipo(2);
 
@@ -135,5 +141,37 @@ public class FuncionarioController {
 
         funcionarioRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<?> atualizarPassword(@PathVariable Integer id,
+                                               @RequestBody Map<String, String> body,
+                                               HttpServletRequest request) {
+        Optional<Funcionario> funcionarioOpt = funcionarioRepository.findById(id);
+        if (funcionarioOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Funcionario funcionario = funcionarioOpt.get();
+
+        if (!SecurityUtil.isProprio(request, funcionario.getEmailFuncionario())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
+        }
+
+        String atual = body.get("passwordAtual");
+        String nova = body.get("novaPassword");
+
+        if (atual == null || nova == null) {
+            return ResponseEntity.badRequest().body("Campos obrigatórios em falta.");
+        }
+
+        if (!passwordEncoder.matches(atual, funcionario.getPasswordFuncionario())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password atual incorreta.");
+        }
+
+        funcionario.setPasswordFuncionario(passwordEncoder.encode(nova));
+        funcionarioRepository.save(funcionario);
+
+        return ResponseEntity.ok("Password atualizada com sucesso.");
     }
 }
