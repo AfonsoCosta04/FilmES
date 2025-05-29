@@ -149,6 +149,12 @@ public class AuthController {
         return ResponseEntity.ok(clienteRepository.save(cliente));
     }
 
+    @GetMapping("/verify-token")
+    public ResponseEntity<Void> verifyToken() {
+        // Se o token for válido, o filtro já tratou disso
+        return ResponseEntity.ok().build();
+    }
+
 
     public static class LoginRequest {
         private String email;

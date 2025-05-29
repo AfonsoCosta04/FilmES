@@ -157,12 +157,32 @@ public class AluguerController {
         if (!isProprio && !isFuncionarioOuAdmin) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
-
+        if(!aluguer.get().getEstado().equals("reservado")){
+            return ResponseEntity.status(403).body("Aluguer já confirmado");
+        }
         aluguerRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/cliente/{id}")
+    @GetMapping("/cliente/tudo/{id}")
+    public ResponseEntity<?> listarPorClienteTudo(
+            @PathVariable Integer id,
+            HttpServletRequest request) {
+        // verifica se o cliente existe
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+        if (clienteOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        boolean isProprio = SecurityUtil.isProprio(request, clienteOpt.get().getEmailCliente());
+        if (!isProprio) {
+            return ResponseEntity.status(403).body("Acesso negado.");
+        }
+        List<Aluguer> alugueres = aluguerRepository.findByCliente_IdCliente(clienteOpt.get().getIdCliente());
+        return ResponseEntity.ok(alugueres);
+    }
+
+    @GetMapping("/cliente/alugados/{id}")
     public ResponseEntity<?> listarPorClienteAlugado(
             @PathVariable Integer id,
             HttpServletRequest request) {

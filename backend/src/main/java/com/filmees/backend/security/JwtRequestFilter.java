@@ -47,10 +47,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                    // ✅ Guardar tipoUtilizador como Integer, não String
                     Integer tipo = jwtUtil.extractClaim(token, "tipoUtilizador", Integer.class);
                     request.setAttribute("tipoUtilizador", tipo);
                     request.setAttribute("emailAutenticado", email);
+                }else{
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\": \"invalid_or_expired_token\"}");
+                    return;
                 }
             }
         }

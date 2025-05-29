@@ -110,11 +110,7 @@ public class FuncionarioController {
         } else {
             funcionarioAtualizado.setFoto(existente.getFoto());
         }
-
         funcionarioAtualizado.setPasswordFuncionario(existente.getPasswordFuncionario());
-        funcionarioAtualizado.setPermLeitura(existente.getPermLeitura());
-        funcionarioAtualizado.setPermCriacao(existente.getPermCriacao());
-        funcionarioAtualizado.setPermEdicao(existente.getPermEdicao());
         funcionarioAtualizado.setIdFuncionario(id);
         funcionarioAtualizado.setIdTipo(2);
 
