@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pedidos Pendentes - FILME.S</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+    }
+
+    html, body {
+      overflow-x: hidden;
+    }
+
+    .header-funcionarios-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #000;
+      color: white;
+      padding: 5px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .esquerda, .direita {
+      display: flex;
+      align-items: center;
+    }
+
+    .esquerda a,
+    .direita a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      margin: 0 10px;
+    }
+
+    .esquerda a:hover,
+    .direita a:hover {
+      color: #FFD700;
+    }
+
+    .background-image {
+      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.65)),
+      url('imagens/background.png') center/cover no-repeat;
+      background-attachment: fixed;
+      padding: 100px 30px 80px 30px;
+      min-height: calc(100vh - 180px);
+    }
+
+    .titulo-pagina {
+      font-size: 32px;
+      color: white;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .cliente {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.94);
+      width: 92%;
+      max-width: 1150px;
+      border-radius: 22px;
+      padding: 22px 30px;
+      margin: 20px auto;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+      flex-wrap: wrap;
+    }
+
+    .info {
+      flex: 1;
+      min-width: 200px;
+      padding-left: 5px;
+    }
+
+    .info .nome {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 6px;
+    }
+
+    .info .email {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    .info .telefone {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    .info .linha-dupla {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .reservar-filmes {
+      display: flex;
+      gap: 10px;
+      margin-left: 20px;
+      flex-wrap: wrap;
+    }
+
+    .reservar-filmes img {
+      width: 60px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .btn-confirmar {
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s ease;
+      margin-left: 20px;
+    }
+    
+    .btn-Cancelar {
+      background-color: #33ff00;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s ease;
+      margin-left: 20px;
+    }
+
+
+    .btn-confirmar:hover {
+      background-color: #FFD700;
+      color: #000;
+    }
+
+    .btn-Cancelar:hover {
+      background-color: #f0ffcc;
+      color: #000;
+    }
+
+    footer {
+      background-color: #000;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      color: #FFD700;
+    }
+  </style>
+</head>
+<body class="catalogo-body">
+  <header>
+    <a href="PagInicial.html">
+      <div class="logo">
+        <img src="imagens/FilmE.S..png" alt="Logo FILME.S" />
+      </div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="catalogonovo.php">Catálogo</a></li>
+        <li><a href="localizacao.html">Localização</a></li>
+        <li><a href="recomendados.php">Recomendados</a></li>
+      </ul>
+    </nav>
+    <div class="auth">
+      <a href="perfil.php"><span>Perfil</span></a> |
+      <a href="carrinhonovo.php">Carrinho</a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <div class="background-image">
+    <h2 class="titulo-pagina">Pedidos De Reserva</h2>
+
+    <!-- Cliente 1 -->
+    <div class="cliente">
+      <div class="info">
+        <div class="nome">Ana Silva</div>
+        <div class="email">Email: ana.silvaa@email.com</div>
+        <div class="telefone">Telemóvel: 965514247</div>
+      </div>
+      <div class="reservar-filmes">
+        <img src="imagens/Duna.jpg" alt="Duna">
+        <img src="imagens/deadpool.jpeg" alt="Deadpool">
+        <img src="imagens/la la land.jpg" alt="La La Land">
+      </div>
+      <button class="btn-confirmar">Confirmar</button>
+      <button class="btn-Cancelar">Cancelar</button>
+    </div>
+
+    <!-- Cliente 2 -->
+    <div class="cliente">
+      <div class="info">
+        <div class="nome">Mario Nunes</div>
+        <div class="email">Email: mario.nunes@email.com</div>
+        <div class="telefone">Telemóvel: 913784581</div>
+      </div>
+      <div class="reservar-filmes">
+        <img src="imagens/minecraft.jpg" alt="Minecraft">
+      </div>
+      <button class="btn-confirmar">Confirmar</button>
+      <button class="btn-Cancelar">Cancelar</button>
+    </div>
+
+    <!-- Cliente 3 -->
+    <div class="cliente">
+      <div class="info">
+        <div class="nome">Jose Carlos</div>
+        <div class="email">Email: jose.carlos@email.com</div>
+        <div class="telefone">Telemóvel: 917874514</div>
+      </div>
+      <div class="reservar-filmes">
+        <img src="imagens/fight club.jpeg" alt="Fight Club">
+        <img src="imagens/EvilDead2.jpg" alt="Evil Dead 2">
+      </div>
+      <button class="btn-confirmar">Confirmar</button>
+      <button class="btn-Cancelar">Cancelar</button>
+    </div>
+  </div>
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+      <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+    </div>
+  </footer>
+</body>
+</html>
