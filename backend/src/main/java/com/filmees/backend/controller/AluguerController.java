@@ -44,7 +44,7 @@ public class AluguerController {
         if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
-        return ResponseEntity.ok(aluguerRepository.findAll());
+        return ResponseEntity.ok(aluguerRepository.findByEstadoNot("devolvido"));
     }
 
     @GetMapping("/{id}")
@@ -157,7 +157,7 @@ public class AluguerController {
         if (!isProprio && !isFuncionarioOuAdmin) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
-        if(!aluguer.get().getEstado().equals("reservado")){
+        if (!aluguer.get().getEstado().equals("reservado")) {
             return ResponseEntity.status(403).body("Aluguer já confirmado");
         }
         aluguerRepository.deleteById(id);
@@ -227,5 +227,26 @@ public class AluguerController {
         a.setEstado("alugado");
         aluguerRepository.save(a);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/devolver")
+    public ResponseEntity<?> marcarComoDecolvido(@PathVariable Integer id, HttpServletRequest req) {
+        if (!SecurityUtil.isFuncionario(req) && !SecurityUtil.isAdmin(req)) {
+            return ResponseEntity.status(403).body("Acesso negado.");
+        }
+        Optional<Aluguer> opt = aluguerRepository.findById(id);
+        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+        Aluguer a = opt.get();
+        a.setEstado("devolvido");
+        aluguerRepository.save(a);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/pesquisa")
+    public ResponseEntity<?> pesquisarPorNomeCliente(@RequestParam String nome, HttpServletRequest request) {
+        if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
+            return ResponseEntity.status(403).body("Acesso negado.");
+        }
+        return ResponseEntity.ok(aluguerRepository.findByCliente_NomeClienteContainingIgnoreCaseAndEstadoNot(nome, "DEVOLVIDO"));
     }
 }

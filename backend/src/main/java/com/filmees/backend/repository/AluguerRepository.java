@@ -27,5 +27,8 @@ public interface AluguerRepository extends JpaRepository<Aluguer, Integer> {
 
     List<Aluguer> findByCliente_IdClienteAndEstado(Integer idCliente, String estado);
 
+    List<Aluguer> findByEstadoNot(String estado);
+
+    List<Aluguer> findByCliente_NomeClienteContainingIgnoreCaseAndEstadoNot(String nome, String estado);
 
 }
