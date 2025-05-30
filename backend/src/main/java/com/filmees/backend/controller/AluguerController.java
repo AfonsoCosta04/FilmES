@@ -8,11 +8,14 @@ import com.filmees.backend.repository.*;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +41,8 @@ public class AluguerController {
 
     @Autowired
     private CarrinhoRepository carrinhoRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(AluguerController.class);
 
     @GetMapping
     public ResponseEntity<?> listarTodos(HttpServletRequest request) {
@@ -119,6 +124,20 @@ public class AluguerController {
             if (jaAlugados.contains(idFilme)) {
                 return ResponseEntity.badRequest()
                         .body("O filme de id " + idFilme + " já está reservado/alugado.");
+            }
+        }
+
+        LocalDate dataNascimento = clienteOpt.get().getDataDeNascCliente();
+        if (dataNascimento == null) {
+            return ResponseEntity.badRequest().body("Data de nascimento do cliente não está definida.");
+        }
+        int idade = Period.between(dataNascimento, LocalDate.now()).getYears();
+
+        for (Filme filme : filmesValidos) {
+            Integer classificacao = filme.getIdadeRecomendada();
+            if (classificacao != null && idade < classificacao) {
+                return ResponseEntity.badRequest()
+                        .body("O cliente não tem idade suficiente para alugar o filme: " + filme.getTitulo());
             }
         }
 

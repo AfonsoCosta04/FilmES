@@ -8,6 +8,8 @@ import com.filmees.backend.repository.FilmeRepository;
 import com.filmees.backend.repository.ListaDesejosRepository;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,9 @@ public class ListaDesejosController {
 
     @Autowired
     private FilmeRepository filmeRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(ListaDesejosController.class);
+
 
     @GetMapping("/{idCliente}")
     public ResponseEntity<?> getWishlist(@PathVariable Integer idCliente, HttpServletRequest request) {

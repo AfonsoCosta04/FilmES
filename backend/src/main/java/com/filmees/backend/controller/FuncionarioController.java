@@ -5,6 +5,8 @@ import com.filmees.backend.model.Funcionario;
 import com.filmees.backend.repository.FuncionarioRepository;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,6 +34,8 @@ public class FuncionarioController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private static final Logger logger = LoggerFactory.getLogger(FuncionarioController.class);
 
     @GetMapping
     public ResponseEntity<?> listarFuncionarios(HttpServletRequest request) {

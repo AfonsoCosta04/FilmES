@@ -1,7 +1,8 @@
 package com.filmees.backend.controller;
 
 import com.filmees.backend.model.Admin;
-import com.filmees.backend.model.Cliente;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.filmees.backend.repository.AdminRepository;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,8 @@ public class AdminController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @GetMapping
     public ResponseEntity<?> listarAdmins(HttpServletRequest request) {

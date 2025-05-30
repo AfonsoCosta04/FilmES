@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.text.similarity.FuzzyScore;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.apache.commons.text.similarity.LevenshteinDistance;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +31,9 @@ public class FilmeController {
 
     @Autowired
     private FilmeRepository filmeRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(FilmeController.class);
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterFilmePorId(@PathVariable Integer id) {

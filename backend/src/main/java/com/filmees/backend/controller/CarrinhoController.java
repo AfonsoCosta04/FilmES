@@ -6,6 +6,8 @@ import com.filmees.backend.repository.CarrinhoRepository;
 import com.filmees.backend.repository.ClienteRepository;
 import com.filmees.backend.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ public class CarrinhoController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(CarrinhoController.class);
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterCarrinho(@PathVariable Integer id, HttpServletRequest request) {

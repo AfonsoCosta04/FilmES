@@ -11,6 +11,8 @@ import com.filmees.backend.repository.FuncionarioRepository;
 import com.filmees.backend.security.JwtUtil;
 import com.filmees.backend.security.LoginRateLimiterService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +47,8 @@ public class AuthController {
 
     @Autowired
     private LoginRateLimiterService rateLimiter;
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletRequest http) {
