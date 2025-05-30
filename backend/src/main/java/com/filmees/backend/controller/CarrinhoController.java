@@ -29,17 +29,21 @@ public class CarrinhoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterCarrinho(@PathVariable Integer id, HttpServletRequest request) {
+        logger.info("Pedido para obter carrinho com ID: {}", id);
         Optional<Carrinho> carrinho = carrinhoRepository.findById(id);
         if (carrinho.isEmpty()) {
+            logger.warn("Carrinho com ID {} não encontrado.", id);
             return ResponseEntity.notFound().build();
         }
 
         Optional<Cliente> cliente = clienteRepository.findById(carrinho.get().getIdCliente());
         if (cliente.isEmpty()) {
+            logger.error("Cliente do carrinho ID {} não encontrado.", id);
             return ResponseEntity.status(500).body("Cliente do carrinho não encontrado.");
         }
 
         if (!SecurityUtil.isProprio(request, cliente.get().getEmailCliente())) {
+            logger.warn("Acesso negado ao carrinho ID {}.", id);
             return ResponseEntity.status(403).body("Acesso negado.");
         }
 
@@ -48,13 +52,16 @@ public class CarrinhoController {
 
     @PostMapping
     public ResponseEntity<?> adicionarCarrinho(@RequestBody Carrinho carrinho, HttpServletRequest request) {
+        logger.info("Pedido para adicionar carrinho para cliente ID: {}", carrinho.getIdCliente());
         // Garante que o utilizador só pode criar carrinho para si
         Optional<Cliente> cliente = clienteRepository.findById(carrinho.getIdCliente());
         if (cliente.isEmpty()) {
+            logger.warn("Cliente ID {} não encontrado para criação de carrinho.", carrinho.getIdCliente());
             return ResponseEntity.status(400).body("Cliente não encontrado.");
         }
 
         if (!SecurityUtil.isProprio(request, cliente.get().getEmailCliente())) {
+            logger.warn("Acesso negado ao criar carrinho para cliente ID: {}", carrinho.getIdCliente());
             return ResponseEntity.status(403).body("Acesso negado.");
         }
 
@@ -65,17 +72,21 @@ public class CarrinhoController {
     public ResponseEntity<?> atualizarCarrinho(@PathVariable Integer id,
                                                @RequestBody Carrinho carrinhoAtualizado,
                                                HttpServletRequest request) {
+        logger.info("Pedido para atualizar carrinho ID: {}", id);
         Optional<Carrinho> existente = carrinhoRepository.findById(id);
         if (existente.isEmpty()) {
+            logger.warn("Carrinho ID {} não encontrado para atualização.", id);
             return ResponseEntity.notFound().build();
         }
 
         Optional<Cliente> cliente = clienteRepository.findById(existente.get().getIdCliente());
         if (cliente.isEmpty()) {
+            logger.error("Cliente do carrinho ID {} não encontrado.", id);
             return ResponseEntity.status(500).body("Cliente não encontrado.");
         }
 
         if (!SecurityUtil.isProprio(request, cliente.get().getEmailCliente())) {
+            logger.warn("Acesso negado à atualização do carrinho ID: {}", id);
             return ResponseEntity.status(403).body("Acesso negado.");
         }
 
@@ -85,21 +96,26 @@ public class CarrinhoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> apagarCarrinho(@PathVariable Integer id, HttpServletRequest request) {
+        logger.info("Pedido para apagar carrinho ID: {}", id);
         Optional<Carrinho> existente = carrinhoRepository.findById(id);
         if (existente.isEmpty()) {
+            logger.warn("Carrinho ID {} não encontrado para remoção.", id);
             return ResponseEntity.notFound().build();
         }
 
         Optional<Cliente> cliente = clienteRepository.findById(existente.get().getIdCliente());
         if (cliente.isEmpty()) {
+            logger.error("Cliente do carrinho ID {} não encontrado.", id);
             return ResponseEntity.status(500).body("Cliente não encontrado.");
         }
 
         if (!SecurityUtil.isProprio(request, cliente.get().getEmailCliente())) {
+            logger.warn("Acesso negado à remoção do carrinho ID: {}", id);
             return ResponseEntity.status(403).body("Acesso negado.");
         }
 
         carrinhoRepository.deleteById(id);
+        logger.info("Carrinho ID {} removido com sucesso.", id);
         return ResponseEntity.ok().build();
     }
 }

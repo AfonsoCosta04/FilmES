@@ -26,47 +26,68 @@ public class TipoUtilizadorController {
 
     @GetMapping
     public ResponseEntity<?> listarTodos(HttpServletRequest request) {
+        logger.info("Requisição para listar todos os tipos de utilizador.");
         if (!SecurityUtil.isAdmin(request)) {
+            logger.warn("Acesso negado à listagem de tipos de utilizador.");
             return ResponseEntity.status(403).body("Acesso negado.");
         }
-        return ResponseEntity.ok(tipoUtilizadorRepository.findAll());
+        List<TipoUtilizador> tipos = tipoUtilizadorRepository.findAll();
+        logger.info("Total de tipos de utilizador encontrados: {}", tipos.size());
+        return ResponseEntity.ok(tipos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterPorId(@PathVariable Integer id, HttpServletRequest request) {
+        logger.info("Requisição para obter tipo de utilizador com ID: {}", id);
         if (!SecurityUtil.isAdmin(request)) {
+            logger.warn("Acesso negado à obtenção de tipo de utilizador ID: {}", id);
             return ResponseEntity.status(403).body("Acesso negado.");
         }
         Optional<TipoUtilizador> tipo = tipoUtilizadorRepository.findById(id);
-        return tipo.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (tipo.isPresent()) {
+            logger.info("Tipo de utilizador encontrado: {}", tipo.get().getDescricao());
+            return ResponseEntity.ok(tipo.get());
+        } else {
+            logger.warn("Tipo de utilizador com ID {} não encontrado.", id);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> adicionar(@RequestBody TipoUtilizador tipoUtilizador, HttpServletRequest request) {
+        logger.info("Requisição para adicionar novo tipo de utilizador: {}", tipoUtilizador.getDescricao());
         if (!SecurityUtil.isAdmin(request)) {
+            logger.warn("Acesso negado à adição de tipo de utilizador.");
             return ResponseEntity.status(403).body("Acesso negado.");
         }
-        return ResponseEntity.ok(tipoUtilizadorRepository.save(tipoUtilizador));
+        TipoUtilizador salvo = tipoUtilizadorRepository.save(tipoUtilizador);
+        logger.info("Tipo de utilizador adicionado com ID: {}", salvo.getIdTipo());
+        return ResponseEntity.ok(salvo);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Integer id,
                                        @RequestBody TipoUtilizador atualizado,
                                        HttpServletRequest request) {
+        logger.info("Requisição para atualizar tipo de utilizador ID: {}", id);
         if (!SecurityUtil.isAdmin(request)) {
+            logger.warn("Acesso negado à atualização de tipo de utilizador ID: {}", id);
             return ResponseEntity.status(403).body("Acesso negado.");
         }
         atualizado.setIdTipo(id);
+        logger.info("Tipo de utilizador com ID {} atualizado com sucesso.", id);
         return ResponseEntity.ok(tipoUtilizadorRepository.save(atualizado));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> apagar(@PathVariable Integer id, HttpServletRequest request) {
+        logger.info("Requisição para apagar tipo de utilizador ID: {}", id);
         if (!SecurityUtil.isAdmin(request)) {
+            logger.warn("Acesso negado à remoção de tipo de utilizador ID: {}", id);
             return ResponseEntity.status(403).body("Acesso negado.");
         }
         tipoUtilizadorRepository.deleteById(id);
+        logger.info("Tipo de utilizador com ID {} removido com sucesso.", id);
         return ResponseEntity.ok().build();
     }
 }

@@ -32,6 +32,7 @@ public class ClienteController {
 
     @GetMapping
     public ResponseEntity<?> listarClientes(HttpServletRequest request) {
+        logger.info("Listar todos os clientes");
         if (!SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
@@ -40,7 +41,7 @@ public class ClienteController {
 
     @GetMapping("/email/{email}")
     public ResponseEntity<?> obterClientePorEmail(@PathVariable String email, HttpServletRequest request) {
-        // Apenas o próprio cliente ou admin pode ver os dados
+        logger.info("Obter cliente com email: {}", email);
         if (!SecurityUtil.isProprio(request, email) && !SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
@@ -57,6 +58,7 @@ public class ClienteController {
     public ResponseEntity<?> atualizarCliente(@PathVariable Integer id,
                                               @RequestBody Cliente atualizado,
                                               HttpServletRequest request) {
+        logger.info("Atualizar dados do cliente com id {}", id);
         Optional<Cliente> clienteExistente = clienteRepository.findById(id);
         if (clienteExistente.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -77,6 +79,7 @@ public class ClienteController {
         if (atualizado.getContribuinte() == null) atualizado.setContribuinte(clienteExistente.get().getContribuinte());
         atualizado.setPasswordCliente(clienteExistente.get().getPasswordCliente());
         Cliente salvo = clienteRepository.save(atualizado);
+        logger.info("Cliente com id {} atualizado com sucesso", id);
         return ResponseEntity.ok(salvo);
     }
 
@@ -84,6 +87,7 @@ public class ClienteController {
     public ResponseEntity<?> atualizarPassword(@PathVariable Integer id,
                                                @RequestBody Map<String, String> body,
                                                HttpServletRequest request) {
+        logger.info("Atualizar password do cliente com id {}", id);
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
         if (clienteOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -109,6 +113,7 @@ public class ClienteController {
         cliente.setPasswordCliente(passwordEncoder.encode(nova));
         clienteRepository.save(cliente);
 
+        logger.info("Password do cliente {} atualizada com sucesso", id);
         return ResponseEntity.ok("Password atualizada com sucesso.");
     }
 
@@ -116,6 +121,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> apagarCliente(@PathVariable Integer id,
                                            HttpServletRequest request) {
+        logger.info("Apagar cliente com id {}", id);
         Optional<Cliente> cliente = clienteRepository.findById(id);
         if (cliente.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -128,6 +134,7 @@ public class ClienteController {
         }
 
         clienteRepository.deleteById(id);
+        logger.info("Cliente com id {} apagado com sucesso", id);
         return ResponseEntity.ok().build();
     }
 

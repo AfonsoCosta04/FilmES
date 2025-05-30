@@ -46,41 +46,55 @@ public class AluguerController {
 
     @GetMapping
     public ResponseEntity<?> listarTodos(HttpServletRequest request) {
+        logger.debug("Requisição para listar todos os alugueres.");
         if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
+            logger.warn("Acesso negado para listar alugueres.");
             return ResponseEntity.status(403).body("Acesso negado.");
         }
+        logger.info("Alugueres ativos listados com sucesso.");
         return ResponseEntity.ok(aluguerRepository.findByEstadoNot("devolvido"));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Aluguer> obterPorId(@PathVariable Integer id) {
+        logger.debug("Requisição para obter aluguer com ID: {}", id);
         Optional<Aluguer> aluguer = aluguerRepository.findById(id);
-        return aluguer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return aluguer.map(ResponseEntity::ok).orElseGet(() -> {
+            logger.warn("Aluguer com ID {} não encontrado.", id);
+            return ResponseEntity.notFound().build();
+        });
     }
 
     @Transactional
     @PostMapping
     public ResponseEntity<?> criarAluguer(@RequestBody Aluguer novoAluguer, HttpServletRequest request) {
+        logger.debug("Iniciando criação de novo aluguer: {}", novoAluguer);
         if (!SecurityUtil.isCliente(request)) {
+            logger.warn("Tentativa de criar aluguer sem ser cliente.");
             return ResponseEntity.status(403).body("Apenas clientes autenticados podem alugar filmes.");
         }
 
         Integer clienteId = SecurityUtil.getUserId(request);
+        logger.debug("ID do cliente autenticado: {}", clienteId);
         if (clienteId == null) {
+            logger.warn("Token inválido ou expirado.");
             return ResponseEntity.status(401)
                     .body("Token inválido ou expirado.");
         }
         Optional<Cliente> clienteOpt = clienteRepository.findById(clienteId);
         if (clienteOpt.isEmpty()) {
+            logger.warn("Cliente com ID {} não encontrado.", clienteId);
             return ResponseEntity.badRequest().body("Cliente não encontrado.");
         }
 
         if (novoAluguer.getFilmes() == null || novoAluguer.getFilmes().isEmpty()) {
+            logger.warn("Aluguer sem filmes.");
             return ResponseEntity.badRequest().body("É necessário pelo menos um filme.");
         }
 
         LocalDate dataLev = novoAluguer.getDataLevantamento();
         LocalDate dataDev = novoAluguer.getDataDevolucao();
+        logger.debug("Data levantamento: {}, Data devolução: {}", dataLev, dataDev);
         if (dataLev == null || dataDev == null) {
             return ResponseEntity.badRequest().body("Datas de levantamento e devolução são obrigatórias.");
         }
@@ -89,6 +103,7 @@ public class AluguerController {
         }
         long dias = ChronoUnit.DAYS.between(dataLev, dataDev);
         if (dias > 10) {
+            logger.warn("Tentativa de aluguel com mais de 10 dias: {}", dias);
             return ResponseEntity.badRequest().body("O prazo máximo de aluguel é de 10 dias.");
         }
 
@@ -96,6 +111,7 @@ public class AluguerController {
         List<Integer> idsFilmes = novoAluguer.getFilmes().stream()
                 .map(Filme::getIdFilme)
                 .toList();
+        logger.debug("IDs dos filmes a alugar: {}", idsFilmes);
 
         long distintos = idsFilmes.stream().distinct().count();
         if (distintos != idsFilmes.size()) {
@@ -132,6 +148,7 @@ public class AluguerController {
             return ResponseEntity.badRequest().body("Data de nascimento do cliente não está definida.");
         }
         int idade = Period.between(dataNascimento, LocalDate.now()).getYears();
+        logger.debug("Idade do cliente: {}", idade);
 
         for (Filme filme : filmesValidos) {
             Integer classificacao = filme.getIdadeRecomendada();
@@ -156,14 +173,17 @@ public class AluguerController {
 
         if (carrinho != null) {
             carrinhoFilmeRepository.deleteByCarrinhoIdCarrinho(carrinho.getIdCarrinho());
+            logger.debug("Carrinho do cliente limpo após criação do aluguer.");
         }
 
         Aluguer aluguerGravado = aluguerRepository.save(novoAluguer);
+        logger.info("Novo aluguer criado: {}", aluguerGravado.getIdAluguer());
         return ResponseEntity.ok(aluguerGravado);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarAluguer(@PathVariable Integer id, HttpServletRequest request) {
+        logger.debug("Requisição para deletar aluguer {}", id);
         Optional<Aluguer> aluguer = aluguerRepository.findById(id);
 
         if (aluguer.isEmpty()) {
@@ -177,9 +197,11 @@ public class AluguerController {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
         if (!aluguer.get().getEstado().equals("reservado")) {
+            logger.warn("Aluguer {} não encontrado para exclusão.", id);
             return ResponseEntity.status(403).body("Aluguer já confirmado");
         }
         aluguerRepository.deleteById(id);
+        logger.info("Aluguer {} excluído com sucesso.", id);
         return ResponseEntity.noContent().build();
     }
 
@@ -187,7 +209,7 @@ public class AluguerController {
     public ResponseEntity<?> listarPorClienteTudo(
             @PathVariable Integer id,
             HttpServletRequest request) {
-        // verifica se o cliente existe
+        logger.debug("Requisição para listar todos os alugueres do cliente com id {}", id);
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
         if (clienteOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -198,6 +220,7 @@ public class AluguerController {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
         List<Aluguer> alugueres = aluguerRepository.findByCliente_IdCliente(clienteOpt.get().getIdCliente());
+        logger.info("Alugueres do cliente com id {} listados com sucesso.", id);
         return ResponseEntity.ok(alugueres);
     }
 
@@ -205,7 +228,7 @@ public class AluguerController {
     public ResponseEntity<?> listarPorClienteAlugado(
             @PathVariable Integer id,
             HttpServletRequest request) {
-        // verifica se o cliente existe
+        logger.debug("Requisição para listar todos os alugueres já levantados do cliente com id {}", id);
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
         if (clienteOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -222,21 +245,25 @@ public class AluguerController {
         List<Aluguer> alugueresAlugados = aluguerRepository
                 .findByCliente_IdClienteAndEstado(id, "alugado");
 
+        logger.info("Alugueres do cliente com estado alugado e id {} listados com sucesso.", id);
         return ResponseEntity.ok(alugueresAlugados);
     }
 
     @GetMapping("/reservados")
     public ResponseEntity<?> listarReservados(HttpServletRequest request) {
+        logger.debug("Requisição para listar todas as reservas");
         if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
 
         List<Aluguer> reservados = aluguerRepository.findByEstadoComCliente("reservado");
+        logger.info("Reservas listadas com sucesso.");
         return ResponseEntity.ok(reservados);
     }
 
     @PutMapping("/{id}/alugar")
     public ResponseEntity<?> marcarComoAlugado(@PathVariable Integer id, HttpServletRequest req) {
+        logger.debug("Funcionario/Admin está marcando aluguer {} como 'alugado'", id);
         if (!SecurityUtil.isFuncionario(req) && !SecurityUtil.isAdmin(req)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
@@ -245,11 +272,13 @@ public class AluguerController {
         Aluguer a = opt.get();
         a.setEstado("alugado");
         aluguerRepository.save(a);
+        logger.info("Aluguer {} marcado como 'alugado'", id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}/devolver")
     public ResponseEntity<?> marcarComoDecolvido(@PathVariable Integer id, HttpServletRequest req) {
+        logger.debug("Funcionario/Admin está marcando aluguer {} como 'devolvido'", id);
         if (!SecurityUtil.isFuncionario(req) && !SecurityUtil.isAdmin(req)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
@@ -258,14 +287,17 @@ public class AluguerController {
         Aluguer a = opt.get();
         a.setEstado("devolvido");
         aluguerRepository.save(a);
+        logger.info("Aluguer {} marcado como 'devolvido'", id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/pesquisa")
     public ResponseEntity<?> pesquisarPorNomeCliente(@RequestParam String nome, HttpServletRequest request) {
+        logger.debug("Funcionario/Admin está a pesquisar os aluguer de {}", nome);
         if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
             return ResponseEntity.status(403).body("Acesso negado.");
         }
+        logger.info("Aluguers de {} pesquisados com sucesso", nome);
         return ResponseEntity.ok(aluguerRepository.findByCliente_NomeClienteContainingIgnoreCaseAndEstadoNot(nome, "DEVOLVIDO"));
     }
 }

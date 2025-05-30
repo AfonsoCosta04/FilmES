@@ -37,12 +37,17 @@ public class ListaDesejosController {
 
     @GetMapping("/{idCliente}")
     public ResponseEntity<?> getWishlist(@PathVariable Integer idCliente, HttpServletRequest request) {
+        logger.info("Pedido para obter lista de desejos do cliente com ID {}", idCliente);
         Optional<Cliente> clienteOpt = clienteRepository.findById(idCliente);
-        if (clienteOpt.isEmpty()) return ResponseEntity.notFound().build();
+        if (clienteOpt.isEmpty()){
+            logger.warn("Cliente com ID {} não encontrado", idCliente);
+            return ResponseEntity.notFound().build();
+        }
 
         Cliente cliente = clienteOpt.get();
 
         if (!SecurityUtil.isProprio(request, cliente.getEmailCliente())) {
+            logger.warn("Acesso negado à lista de desejos do cliente com ID {}", idCliente);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
@@ -50,15 +55,18 @@ public class ListaDesejosController {
         List<Filme> filmes = desejos.stream()
                 .map(ListaDesejos::getFilme)
                 .collect(Collectors.toList());
+        logger.info("Lista de desejos obtida com sucesso para o cliente com ID {}", idCliente);
         return ResponseEntity.ok(filmes);
     }
 
     @PostMapping("/{idCliente}/{idFilme}")
     public ResponseEntity<?> adicionarDesejo(@PathVariable Integer idCliente, @PathVariable Integer idFilme) {
+        logger.info("Pedido para adicionar filme ID {} à lista de desejos do cliente ID {}", idFilme, idCliente);
         Optional<Cliente> clienteOpt = clienteRepository.findById(idCliente);
         Optional<Filme> filmeOpt = filmeRepository.findById(idFilme);
 
         if (clienteOpt.isEmpty() || filmeOpt.isEmpty()) {
+            logger.warn("Cliente ou filme não encontrado (cliente ID {}, filme ID {})", idCliente, idFilme);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente ou filme não encontrado.");
         }
 
@@ -67,6 +75,7 @@ public class ListaDesejosController {
                 .isPresent();
 
         if (jaExiste) {
+            logger.info("Filme ID {} já está na lista de desejos do cliente ID {}", idFilme, idCliente);
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Este filme já está na lista de desejos.");
         }
 
@@ -75,18 +84,22 @@ public class ListaDesejosController {
         novo.setFilme(filmeOpt.get());
 
         listaDesejosRepository.save(novo);
+        logger.info("Filme ID {} adicionado à lista de desejos do cliente ID {}", idFilme, idCliente);
         return ResponseEntity.ok("Filme adicionado à lista de desejos.");
     }
 
     @DeleteMapping("/{idCliente}/{idFilme}")
     public ResponseEntity<?> removerDesejo(@PathVariable Integer idCliente, @PathVariable Integer idFilme) {
+        logger.info("Pedido para remover filme ID {} da lista de desejos do cliente ID {}", idFilme, idCliente);
         Optional<ListaDesejos> desejo = listaDesejosRepository.findByCliente_IdClienteAndFilme_IdFilme(idCliente, idFilme);
 
         if (desejo.isEmpty()) {
+            logger.warn("Filme ID {} não encontrado na lista de desejos do cliente ID {}", idFilme, idCliente);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Filme não encontrado na lista de desejos.");
         }
 
         listaDesejosRepository.delete(desejo.get());
+        logger.info("Filme ID {} removido da lista de desejos do cliente ID {}", idFilme, idCliente);
         return ResponseEntity.ok("Filme removido da lista de desejos.");
     }
 }

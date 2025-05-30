@@ -37,6 +37,7 @@ public class FilmeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obterFilmePorId(@PathVariable Integer id) {
+        logger.info("Pedido para obter filme com ID: {}", id);
         Optional<Filme> filmeOptional = filmeRepository.findById(id);
         if (filmeOptional.isPresent()) {
             return ResponseEntity.ok(filmeOptional.get());
@@ -51,6 +52,7 @@ public class FilmeController {
             @RequestParam(required = false) String ano,
             @RequestParam(required = false) String duracao
     ) {
+        logger.info("Filtrando filmes com genero: {}, ano: {}, duracao: {}", genero, ano, duracao);
         List<Filme> filmes = filmeRepository.filtrarFilmes(genero, ano, duracao);
         return ResponseEntity.ok(filmes);
     }
@@ -62,6 +64,7 @@ public class FilmeController {
             HttpServletRequest request) {
 
         if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isFuncionario(request)) {
+            logger.warn("Tentativa de adicionar filme sem permissão.");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
@@ -72,7 +75,9 @@ public class FilmeController {
                 Path pathDestino = Paths.get("C:/FilmES/filme.s/public/imagens", nomeFicheiro);
                 Files.copy(imagem.getInputStream(), pathDestino, StandardCopyOption.REPLACE_EXISTING);
                 filme.setFoto("imagens/" + nomeFicheiro);
+                logger.info("Imagem do filme guardada em: {}", pathDestino);
             } catch (IOException e) {
+                logger.error("Erro ao guardar imagem do filme.", e);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar imagem.");
             }
         }
@@ -81,6 +86,7 @@ public class FilmeController {
         if (filme.getPreco() == null) filme.setPreco(5.0);
 
 
+        logger.info("Filme adicionado: {}", filme.getTitulo());
         return ResponseEntity.ok(filmeRepository.save(filme));
     }
 
@@ -93,11 +99,15 @@ public class FilmeController {
             HttpServletRequest request) {
 
         if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isFuncionario(request)) {
+            logger.warn("Tentativa de editar filme sem permissão.");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
         Filme existente = filmeRepository.findById(id).orElse(null);
-        if (existente == null) return ResponseEntity.notFound().build();
+        if (existente == null) {
+            logger.warn("Filme com ID {} não encontrado para edição.", id);
+            return ResponseEntity.notFound().build();
+        }
 
         // Atualizar imagem se existir
         if (imagem != null && !imagem.isEmpty()) {
@@ -106,16 +116,20 @@ public class FilmeController {
                 if (imagemAntiga != null) {
                     Path pathAntigo = Paths.get("C:/FilmES/filme.s/public", imagemAntiga);
                     Files.deleteIfExists(pathAntigo);
+                    logger.info("Imagem antiga do filme removida: {}", pathAntigo);
                 }
 
                 String nomeFicheiro = UUID.randomUUID() + "_" + imagem.getOriginalFilename();
                 Path pathDestino = Paths.get("C:/FilmES/filme.s/public/imagens/", nomeFicheiro);
                 Files.copy(imagem.getInputStream(), pathDestino, StandardCopyOption.REPLACE_EXISTING);
                 atualizado.setFoto("imagens/" + nomeFicheiro);
+                logger.info("Nova imagem do filme guardada em: {}", pathDestino);
             } catch (IOException e) {
+                logger.error("Erro ao guardar nova imagem do filme.", e);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao guardar imagem.");
             }
         } else {
+            logger.info("Foto do filme atualizada: {}", atualizado.getTitulo());
             atualizado.setFoto(existente.getFoto());
         }
 
@@ -138,16 +152,20 @@ public class FilmeController {
         if (atualizado.getDisponivel() == null) atualizado.setDisponivel(existente.getDisponivel());
         if (atualizado.getIdadeRecomendada() == null) atualizado.setIdadeRecomendada(existente.getIdadeRecomendada());
 
+        logger.info("Filme atualizado: {}", atualizado.getTitulo());
         return ResponseEntity.ok(filmeRepository.save(atualizado));
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> apagarFilme(@PathVariable Integer id, HttpServletRequest request) {
+        logger.info("Pedido para apagar o filme com ID: {}", id);
         if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isFuncionario(request)) {
+            logger.warn("Acesso negado para apagar o filme com ID: {} - utilizador não autorizado", id);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
         if (!filmeRepository.existsById(id)) {
+            logger.warn("Filme com ID {} não encontrado para apagar.", id);
             return ResponseEntity.notFound().build();
         }
 
@@ -157,18 +175,24 @@ public class FilmeController {
                 // Caminho completo para a pasta public/imagens do React
                 Path caminhoImagem = Paths.get("C:/FilmES/filme.s/public", filme.getFoto());
                 Files.deleteIfExists(caminhoImagem);
+                logger.info("Imagem '{}' do filme com ID {} apagada com sucesso.", filme.getFoto(), id);
             } catch (IOException e) {
+                logger.error("Erro ao apagar a imagem '{}' do filme com ID {}: {}", filme.getFoto(), id, e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao apagar a imagem.");
             }
         }
 
         filmeRepository.deleteById(id);
+        logger.info("Filme com ID {} apagado com sucesso.", id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/populares")
     public List<Filme> filmesPopularesUltimaSemana() {
         LocalDate dataLimite = LocalDate.now().minusDays(7);
+        logger.info("Pedido para listar os filmes mais populares desde {}", dataLimite);
+
+        logger.info("Pedido para listar os filmes mais populares desde {}", dataLimite);
         return filmeRepository.findMaisAlugadosUltimaSemana(dataLimite);
     }
 
@@ -178,22 +202,30 @@ public class FilmeController {
             @RequestBody Filme filmeAtualizado,
             HttpServletRequest request) {
 
+        logger.info("Pedido para atualizar disponibilidade do filme com ID: {}", id);
         if (!SecurityUtil.isAdmin(request) && !SecurityUtil.isFuncionario(request)) {
+            logger.warn("Acesso negado para atualizar disponibilidade do filme com ID: {} - utilizador não autorizado", id);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
         Filme filme = filmeRepository.findById(id).orElse(null);
-        if (filme == null) return ResponseEntity.notFound().build();
+        if (filme == null) {
+            logger.warn("Filme com ID {} não encontrado para atualizar disponibilidade.", id);
+            return ResponseEntity.notFound().build();
+        }
 
         filme.setDisponivel(filmeAtualizado.getDisponivel());
+        logger.info("Disponibilidade do filme com ID {} atualizada para {}", id, filmeAtualizado.getDisponivel());
         return ResponseEntity.ok(filmeRepository.save(filme));
     }
 
     @GetMapping("/pesquisa")
     public ResponseEntity<?> pesquisarFilmes(@RequestParam(required = false) String termo) {
+        logger.info("Pedido de pesquisa de filmes com termo: '{}'", termo);
         List<Filme> todosFilmes = filmeRepository.findAll();
 
         if (termo == null || termo.trim().isEmpty()) {
+            logger.info("Termo de pesquisa vazio ou nulo - retornando todos os filmes.");
             return ResponseEntity.ok(todosFilmes);
         }
 
@@ -241,6 +273,7 @@ public class FilmeController {
                 })
                 .toList();
 
+        logger.info("Foram encontrados {} filmes correspondentes ao termo '{}'", filmesFiltrados.size(), termo);
         return ResponseEntity.ok(filmesFiltrados);
     }
 }

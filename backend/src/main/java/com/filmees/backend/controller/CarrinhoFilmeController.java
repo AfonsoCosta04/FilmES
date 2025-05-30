@@ -38,7 +38,7 @@ public class CarrinhoFilmeController {
     @GetMapping("/carrinho/{idCarrinho}/filmes")
     public ResponseEntity<?> listarFilmesPorCarrinho(@PathVariable Integer idCarrinho,
                                                      HttpServletRequest request) {
-
+        logger.info("Listar filmes do carrinho {}", idCarrinho);
         String emailAutenticado = (String) request.getAttribute("emailAutenticado");
 
         Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarrinho);
@@ -65,6 +65,7 @@ public class CarrinhoFilmeController {
     public ResponseEntity<?> adicionarFilmeAoCarrinho(@PathVariable Integer idCarrinho,
                                                       @PathVariable Integer idFilme,
                                                       HttpServletRequest request) {
+        logger.info("Adicionar filme {} ao carrinho {}", idFilme, idCarrinho);
         Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarrinho);
         if (carrinho.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -93,6 +94,7 @@ public class CarrinhoFilmeController {
         novo.setCarrinho(carrinho.get());
         novo.setFilme(filme);
         carrinhoFilmeRepository.save(novo);
+        logger.info("Filme {} adicionado com sucesso ao carrinho {}", idFilme, idCarrinho);
         return ResponseEntity.ok("Filme adicionado ao carrinho com sucesso.");
     }
 
@@ -100,6 +102,7 @@ public class CarrinhoFilmeController {
     public ResponseEntity<?> removerFilmeDoCarrinho(@PathVariable Integer idCarrinho,
                                                     @PathVariable Integer idFilme,
                                                     HttpServletRequest request) {
+        logger.info("Remover filme {} do carrinho {}", idFilme, idCarrinho);
         Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarrinho);
         if (carrinho.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -120,12 +123,14 @@ public class CarrinhoFilmeController {
                 .collect(Collectors.toList());
 
         registos.forEach(carrinhoFilmeRepository::delete);
+        logger.info("Filme {} removido do carrinho {}", idFilme, idCarrinho);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/carrinho/{idCarrinho}/total")
     public ResponseEntity<?> calcularTotalCarrinho(@PathVariable Integer idCarrinho,
                                                    HttpServletRequest request) {
+        logger.info("Calcular total do carrinho {}", idCarrinho);
         Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarrinho);
         if (carrinho.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -152,12 +157,14 @@ public class CarrinhoFilmeController {
             }
         }
 
+        logger.info("Total do carrinho {} é calculado", idCarrinho);
         return ResponseEntity.ok(total);
     }
 
     @GetMapping("/carrinho/{idCarrinho}/quantidade")
     public ResponseEntity<?> contarFilmesNoCarrinho(@PathVariable Integer idCarrinho,
                                                     HttpServletRequest request) {
+        logger.info("Contar filmes no carrinho {}", idCarrinho);
         Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarrinho);
         if (carrinho.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -173,6 +180,7 @@ public class CarrinhoFilmeController {
         }
 
         int quantidade = carrinhoFilmeRepository.countByCarrinho_IdCarrinho(idCarrinho);
+        logger.info("Carrinho {} tem {} filmes", idCarrinho, quantidade);
         return ResponseEntity.ok(quantidade);
     }
 }

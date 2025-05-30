@@ -46,7 +46,9 @@ public class RecomendacaoController {
             @RequestBody Map<String, Object> payload,
             HttpServletRequest request) {
 
+        logger.info("Requisição recebida para recomendar filmes: {}", payload);
         if (!SecurityUtil.isFuncionario(request) && !SecurityUtil.isAdmin(request)) {
+            logger.warn("Acesso negado para recomendar filmes.");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado.");
         }
 
@@ -54,42 +56,52 @@ public class RecomendacaoController {
         List<Integer> filmesIds = (List<Integer>) payload.get("filmes");
 
         if (filmesIds == null || filmesIds.size() != 5) {
+            logger.warn("Número inválido de filmes fornecido: {}", filmesIds);
             return ResponseEntity.badRequest().body("Tens de selecionar exatamente 5 filmes.");
         }
 
         Funcionario funcionario = funcionarioRepository.findById(idFuncionario).orElse(null);
         if (funcionario == null) {
+            logger.warn("Funcionário com ID {} não encontrado", idFuncionario);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não encontrado.");
         }
 
         // Apagar recomendação anterior (se existir)
         Optional<Recomendacao> antiga = recomendacaoRepository.findByFuncionario(funcionario);
-        antiga.ifPresent(recomendacaoExistente -> {
-            recomendacaoFilmeRepository.deleteByRecomendacao(recomendacaoExistente);
-            recomendacaoRepository.delete(recomendacaoExistente);
-        });
+        if (antiga.isPresent()) {
+            logger.info("Removendo recomendação anterior do funcionário com ID {}", idFuncionario);
+            recomendacaoFilmeRepository.deleteByRecomendacao(antiga.get());
+            recomendacaoRepository.delete(antiga.get());
+        }
 
         // Criar nova recomendação (sem data)
         Recomendacao nova = new Recomendacao();
         nova.setFuncionario(funcionario);
         recomendacaoRepository.save(nova);
+        logger.info("Nova recomendação criada para o funcionário com ID {}", idFuncionario);
 
         // Associar os 5 filmes
         for (Integer idFilme : filmesIds) {
             Filme filme = filmeRepository.findById(idFilme).orElse(null);
-            if (filme == null) continue;
+            if (filme == null) {
+                logger.warn("Filme com ID {} não encontrado, ignorando...", idFilme);
+                continue;
+            }
 
             RecomendacaoFilme rf = new RecomendacaoFilme();
             rf.setRecomendacao(nova);
             rf.setFilme(filme);
             recomendacaoFilmeRepository.save(rf);
+            logger.info("Filme com ID {} associado à recomendação do funcionário ID {}", idFilme, idFuncionario);
         }
 
+        logger.info("Recomendação finalizada com sucesso para o funcionário ID {}", idFuncionario);
         return ResponseEntity.ok("Recomendação guardada com sucesso!");
     }
 
     @GetMapping("/clientes")
     public ResponseEntity<?> listarRecomendacoesParaClientes() {
+        logger.info("Requisição recebida para listar recomendações para clientes.");
         List<Recomendacao> recomendacoes = recomendacaoRepository.findAll();
         List<Map<String, Object>> resultado = new ArrayList<>();
 
@@ -116,6 +128,7 @@ public class RecomendacaoController {
             resultado.add(mapa);
         }
 
+        logger.info("Recomendações para clientes carregadas com sucesso. Total: {}", resultado.size());
         return ResponseEntity.ok(resultado);
     }
 }
