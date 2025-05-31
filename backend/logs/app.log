@@ -331,3 +331,107 @@ java.net.ConnectException: Connection timed out: getsockopt
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
 	at java.base/java.lang.Thread.run(Thread.java:1447) ~[na:na]
 
+2025-05-31T15:44:49.466+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.AuthController    : Tentativa de login para o email: cliente@cliente.com do IP: 0:0:0:0:0:0:0:1
+2025-05-31T15:44:49.472+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-31T15:44:51.309+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@48ee79dc
+2025-05-31T15:44:51.318+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-31T15:44:51.916+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.AuthController    : Cliente autenticado com sucesso: cliente@cliente.com
+2025-05-31T15:44:52.139+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:44:52.139+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:44:52.145+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:44:52.289+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:44:52.289+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:45:00.718+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-3] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:45:00.719+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-3] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:45:00.728+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:45:00.806+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:45:00.843+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:45:00.843+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:45:01.641+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:45:01.689+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:45:02.451+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:45:06.809+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.backend.controller.FilmeController   : Filtrando filmes com genero: null, ano: null, duracao: null
+2025-05-31T15:45:07.070+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.backend.controller.FilmeController   : Filtrando filmes com genero: null, ano: null, duracao: null
+2025-05-31T15:45:15.055+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.b.controller.RecomendacaoController  : Requisição recebida para listar recomendações para clientes.
+2025-05-31T15:45:15.584+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.b.controller.RecomendacaoController  : Recomendações para clientes carregadas com sucesso. Total: 1
+2025-05-31T15:45:15.592+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.b.controller.RecomendacaoController  : Requisição recebida para listar recomendações para clientes.
+2025-05-31T15:45:15.983+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.b.controller.RecomendacaoController  : Recomendações para clientes carregadas com sucesso. Total: 1
+2025-05-31T15:45:18.339+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-3] c.f.b.c.CarrinhoFilmeController          : Listar filmes do carrinho 5
+2025-05-31T15:45:19.134+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.c.CarrinhoFilmeController          : Listar filmes do carrinho 5
+2025-05-31T15:45:24.879+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:45:25.043+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:46:05.170+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:46:05.181+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:46:05.185+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:46:05.313+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:46:05.950+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:46:05.960+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:46:06.649+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:46:13.262+01:00 DEBUG 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.AluguerController       : Requisição para listar todos os alugueres do cliente com id 7
+2025-05-31T15:46:13.702+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.AluguerController       : Alugueres do cliente com id 7 listados com sucesso.
+2025-05-31T15:46:13.893+01:00 DEBUG 18240 --- [backend] [http-nio-8080-exec-10] c.f.b.controller.AluguerController       : Requisição para listar todos os alugueres do cliente com id 7
+2025-05-31T15:46:14.325+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.b.controller.AluguerController       : Alugueres do cliente com id 7 listados com sucesso.
+2025-05-31T15:46:23.159+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:46:23.298+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:46:41.633+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.backend.controller.AuthController    : Tentativa de login para o email: funcionario@gmail.com do IP: 0:0:0:0:0:0:0:1
+2025-05-31T15:46:41.877+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.backend.controller.AuthController    : Funcionário autenticado com sucesso: funcionario@gmail.com
+2025-05-31T15:46:41.896+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-4] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:46:44.480+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:46:48.749+01:00 DEBUG 18240 --- [backend] [http-nio-8080-exec-3] c.f.b.controller.AluguerController       : Requisição para listar todas as reservas
+2025-05-31T15:46:48.862+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-3] c.f.b.controller.AluguerController       : Reservas listadas com sucesso.
+2025-05-31T15:46:48.992+01:00 DEBUG 18240 --- [backend] [http-nio-8080-exec-2] c.f.b.controller.AluguerController       : Requisição para listar todas as reservas
+2025-05-31T15:46:49.116+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.b.controller.AluguerController       : Reservas listadas com sucesso.
+2025-05-31T15:46:52.707+01:00 DEBUG 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.controller.AluguerController       : Funcionario/Admin está marcando aluguer 22 como 'alugado'
+2025-05-31T15:46:53.366+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.controller.AluguerController       : Aluguer 22 marcado como 'alugado'
+2025-05-31T15:46:59.536+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-4] c.f.b.controller.FuncionarioController   : Pedido para obter funcionário com ID: 7
+2025-05-31T15:46:59.921+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-4] c.f.b.controller.FuncionarioController   : Funcionário com ID 7 obtido com sucesso.
+2025-05-31T15:46:59.951+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.FuncionarioController   : Pedido para obter funcionário com ID: 7
+2025-05-31T15:47:00.280+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.FuncionarioController   : Funcionário com ID 7 obtido com sucesso.
+2025-05-31T15:47:06.215+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.backend.controller.AuthController    : Tentativa de login para o email: cliente@cliente.com do IP: 0:0:0:0:0:0:0:1
+2025-05-31T15:47:06.524+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.backend.controller.AuthController    : Cliente autenticado com sucesso: cliente@cliente.com
+2025-05-31T15:47:06.614+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:47:06.614+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:47:06.617+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:47:06.735+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-4] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:47:06.736+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-4] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:47:22.993+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:47:23.150+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:47:25.414+01:00 DEBUG 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.AluguerController       : Requisição para listar todos os alugueres do cliente com id 7
+2025-05-31T15:47:25.853+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.AluguerController       : Alugueres do cliente com id 7 listados com sucesso.
+2025-05-31T15:47:26.036+01:00 DEBUG 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.AluguerController       : Requisição para listar todos os alugueres do cliente com id 7
+2025-05-31T15:47:26.421+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.AluguerController       : Alugueres do cliente com id 7 listados com sucesso.
+2025-05-31T15:52:15.974+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:52:16.204+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:52:21.297+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:21.297+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:21.527+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-3] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:21.528+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-3] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:24.422+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:52:24.437+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:24.437+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:24.438+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-4] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:52:24.715+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:24.716+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:25.920+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:52:25.933+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:52:26.493+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:52:26.510+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:26.510+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-3] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:52:26.510+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-8] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:26.848+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:26.849+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.backend.controller.FilmeController   : Pedido para listar os filmes mais populares desde 2025-05-24
+2025-05-31T15:52:27.354+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:52:28.069+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:52:28.077+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:52:29.400+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-1] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:52:34.437+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:52:34.629+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:53:16.880+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:53:16.885+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-5] c.f.backend.controller.AuthController    : Token JWT verificado com sucesso.
+2025-05-31T15:53:16.890+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-4] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:53:17.124+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-10] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:53:18.337+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-2] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:53:18.351+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Contar filmes no carrinho 5
+2025-05-31T15:53:19.604+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-9] c.f.b.c.CarrinhoFilmeController          : Carrinho 5 tem 0 filmes
+2025-05-31T15:53:25.671+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-6] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
+2025-05-31T15:53:25.929+01:00  INFO 18240 --- [backend] [http-nio-8080-exec-7] c.f.b.controller.ClienteController       : Obter cliente com email: cliente@cliente.com
